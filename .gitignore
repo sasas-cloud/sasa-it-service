@@ -1,0 +1,60 @@
+# Environment files — NEVER commit
+.env
+.env.local
+.env.production
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temp
+tmp/
+temp/
+.cache/
+*.tmp
+
+# Secrets (additional)
+*.key
+*.pem
+*.secret
+secrets/
+credentials/
+
+# Local config
+config.local.*
+local-config.*
+
+# Test / Dev
+test/
+tests/
+spec/
