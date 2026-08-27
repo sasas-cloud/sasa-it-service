@@ -23,10 +23,10 @@ Das Wiki wird mit KI-Unterstützung erstellt und gepflegt. Jeder Eintrag wird vo
 
 | Thema | Beschreibung |
 |-------|-------------|
-| [Authentik](wiki/authentik.md) | SSO, OIDC, MFA — unser Identity Provider |
+|| [Authentik](wiki/authentik-sso.md) | SSO, OIDC, MFA — unser Identity Provider |
 | [NetBird](wiki/netbird.md) | VPN, DNS, SSO-Brücke — sicherer Zugang |
 | [Nextcloud AIO](wiki/nextcloud-aio.md) | Files, Wiki, Docs, Talk — Office-Plattform |
-| [Caddy SSL](wiki/caddy-ssl.md) | Reverse Proxy, HTTPS, Zertifikate |
+|| [Kunden-Deployment](docs/kunden-deployment.md) | Verteilte AIO-Instanzen, SSL, VPN, Talk-Anbindung |
 | [Firewall](wiki/firewall.md) | Regeln, Ports, Schutz |
 
 ### KI & Tools
