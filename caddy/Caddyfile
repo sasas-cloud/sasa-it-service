@@ -1,0 +1,359 @@
+# Caddy Reverse Proxy — SASA-IT Plattform
+
+## Überblick
+
+Caddy ist der einzige Entry-Point für alle Subdomains. Er verwaltet SSL (LetsEncrypt oder Nextcloud-Zertifikat) und routet zu den jeweiligen Diensten.
+
+## Caddyfile
+
+```caddy
+{
+    # Admins E-Mail für LetsEncrypt Benachrichtigungen
+    email admin@sasa-it.de
+
+    # HTTP auf HTTPS umleiten (Standard)
+    http_redirect https
+
+    # Optional: HTTP/3 aktivieren
+    # servers {
+    #     protocol {
+    #         http3
+    #     }
+    # }
+}
+
+# ===========================================
+# SASA-IT — Landing Page (statisch)
+# ===========================================
+sasa-it.de, www.sasa-it.de {
+    # Statische HTML-Datei aus dem Repo
+    root * /var/www/sasa-it-service/landing-page
+    file_server
+
+    # Security Headers
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        +X-Content-Type-Options "nosniff"
+        +X-Frame-Options "DENY"
+        +Referrer-Policy "strict-origin-when-cross-origin"
+        +Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    }
+
+    # Logging (optional)
+    log {
+        output file /var/log/caddy/sasa-it-access.log
+        format console
+    }
+}
+
+# ===========================================
+# Authentik — Identity Provider
+# ===========================================
+auth.sasa-it.de {
+    # Authentik läuft standardmäßig auf Port 9000 (HTTP)
+    # Caddy macht HTTPS und reverse-proxies
+    reverse_proxy localhost:9000
+
+    # Security Headers für Authentik
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        +X-Content-Type-Options "nosniff"
+        +X-Frame-Options "DENY"
+    }
+
+    # Websocket Support (für Authentik Flows)
+    @websocket path /api/v3/ *ws*
+    reverse_proxy @websocket localhost:9000
+
+    log {
+        output file /var/log/caddy/auth-access.log
+    }
+}
+
+# ===========================================
+# Nextcloud AIO — Office, Files, Wiki, Talk
+# ===========================================
+office.sasa-it.de {
+    # Nextcloud AIO läuft typisch auf Port 8080 (intern)
+    # Standard-Installation: nextcloud-aio Container auf 8080
+
+    reverse_proxy localhost:8080
+
+    # Wichtige Nextcloud Header
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        +X-Content-Type-Options "nosniff"
+        +X-Frame-Options "SAMEORIGIN"
+        +Content-Security-Policy "frame-ancestors 'self'"
+    }
+
+    # Nextcloud Talk WebSocket Support (für Echtzeit-Kommunikation)
+    @websocket path /ocs/v2/applications/* /websocket/*
+    reverse_proxy @websocket localhost:8080
+
+    # Nextcloud spezifische Caching-Header
+    @static_files path *.css *.js *.png *.jpg *.svg *.woff *.woff2
+    header @static_files {
+        +Cache-Control "public, max-age=3600"
+    }
+
+    log {
+        output file /var/log/caddy/office-access.log
+    }
+}
+
+# ===========================================
+# NetBird — VPN, Dashboard, SSO
+# ===========================================
+sso.sasa-it.de {
+    # NetBird Management Dashboard (typisch Port 3000 oder 443 intern)
+    # Standard: netbird-management auf Port 3000 (intern)
+
+    reverse_proxy localhost:3000
+
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        +X-Content-Type-Options "nosniff"
+    }
+
+    # NetBird benötigt möglicherweise korrekte Host-Header
+    header_up Host {upstream_hostport}
+
+    log {
+        output file /var/log/caddy/sso-access.log
+    }
+}
+
+# ===========================================
+# NetBird Signal (VPN Signal Server)
+# ===========================================
+# Der Signal Server wird direkt von NetBird Clients genutzt,
+# nicht über Caddy. Daher nicht hier proxy-ed.
+# (siehe NetBird Dokumentation für Signal-Port Konfiguration)
+
+# ===========================================
+# NetBird Management API (optional direkt)
+# ===========================================
+# Wenn nötig, kann man die Management API separat expose-ten:
+# api.sasa-it.de → reverse_proxy localhost:443 (oder NetBird Management Port)
+
+# ===========================================
+# Aller Anderen: Fallback / Catch-All
+# ===========================================
+# Alle unbekannten Domains auf Landing Page oder 404 weiterleiten
+# (optional — kann auch weggelassen werden)
+
+# * {
+#     reverse_proxy localhost:8080
+# }
+```
+
+---
+
+## Alternative: Wenn Nextcloud AIO HTTPS selbst macht
+
+Wenn Nextcloud AIO intern auch HTTPS auf Port 8443 verwendet (manche Installationen), dann:
+
+```caddy
+office.sasa-it.de {
+    # Nextcloud AIO interne HTTPS-Adresse
+    reverse_proxy https://localhost:8443 {
+        # Caddy muss das Nextcloud-Zertifikat vertrauen
+        tls_insecure_skip_verify
+    }
+}
+```
+
+**Aber:** Einfach ist besser — Nextcloud AIO intern auf HTTP (8080) laufen lassen, Caddy macht HTTPS nach außen. Das ist die empfohlene Konfiguration.
+
+---
+
+## SSL-Strategie: Zwei Optionen
+
+### Option A: Caddy mit LetsEncrypt (empfohlen)
+
+Caddy holt sich eigene LetsEncrypt-Zertifikate für jede Subdomain.
+
+**Vorteile:**
+- Automatische Verlängerung
+- Keine Abhängigkeit von Nextcloud
+- Einheitliche Zertifikatsverwaltung für alle Dienste
+
+**Nachteile:**
+- Jede Subdomain braucht eigene Validierung (HTTP-Referenz oder DNS)
+- Port 80 muss offen sein für Validierung
+
+**Erfordert:**
+- Port 80 offen (für LetsEncrypt Challenge)
+- DNS korrekt für alle Subdomains
+- E-Mail-Adresse für Benachrichtigungen
+
+### Option B: Nextcloud stellt Zertifikat (aus너 Nutzer-Preference)
+
+Nextcloud AIO kann Zertifikate über LetsEncrypt oder manuelle Zertifikate verwalten. Caddy nutzt dann das gleiche Zertifikat.
+
+**Vorgehen:**
+1. Nextcloud AIO holt Zertifikat (z.B. über `nextcloud-aio` Setup)
+2. Zertifikat ins Caddy Volume legen
+3. Caddy konfiguriert mit `tls /pfad/zum/cert.pem /pfad/zum/key.pem`
+
+**Vorteile:**
+- Ein Zertifikat für alle (wenn Nextcloud AIO als Zentrale)
+- Kein zusätzlicher LetsEncrypt-Flow für Caddy
+
+**Nachteile:**
+- Komplexer
+- Abhängigkeit von Nextcloud AIO Setup
+- Nicht alle Dienste profitieren automatisch
+
+### Empfehlung: Option A
+
+Einfacher, Einheitlicher, weniger Fehler-Quellen.
+
+---
+
+## Ports Übersicht
+
+### Extern (öffentlich) — Caddy
+
+| Port | Protokoll | Dienst | Beschreibung |
+|------|-----------|--------|--------------|
+| **80** | TCP | HTTP → HTTPS Redirect | LetsEncrypt Challenge + Redirect |
+| **443** | TCP | HTTPS | Alle Subdomains (Caddy Reverse Proxy) |
+| **2053** | TCP | Nextcloud Talk | Alternative Talk Ports (WebSocket) |
+| **2054** | TCP | Nextcloud Talk | Alternative Talk Ports |
+| **2055** | TCP | Nextcloud Talk | Alternative Talk Ports |
+| **2056** | TCP | Nextcloud Talk | Alternative Talk Ports |
+
+### Intern (localhost) — Dienste
+
+| Port | Dienst | Beschreibung | Zugriff |
+|------|--------|--------------|---------|
+| **8080** | Nextcloud AIO (intern) | Nextcloud Daten, Admin, Wiki, Talk | Nur localhost (von Caddy) |
+| **9000** | Authentik Server | Authentik HTTP Interface | Nur localhost (von Caddy) |
+| **9443** | Authentik HTTPS (optional) | Authentik internes HTTPS | Nur localhost |
+| **3000** | NetBird Management | Dashboard, Management API | Nur localhost (von Caddy) |
+| **443** | NetBird intern (optional) | Management HTTPS | Nur localhost |
+| **6443** | Kubernetes (optional) | Wenn Nextcloud AIO K8s nutzt | Nur localhost |
+
+### SSH
+
+| Port | Dienst | Beschreibung |
+|------|--------|--------------|
+| **22** | SSH | Nur für Admins (IP-beschränkt) |
+
+---
+
+## Firewall-Regeln (UFW)
+
+```bash
+#!/bin/bash
+# firewall/ufw-rules.sh — für SASA-IT Plattform
+
+# Standard: Alles blockieren
+ufw default deny incoming
+ufw default allow outgoing
+
+# SSH — nur von vertrauenswürdigen IPs
+ufw allow from 192.168.1.0/24 to any port 22 proto tcp
+ufw allow from <DEIN_HOME_IP> to any port 22 proto tcp
+
+# HTTP (80) für LetsEncrypt + Redirect
+ufw allow 80/tcp
+
+# HTTPS (443) für alle Subdomains
+ufw allow 443/tcp
+
+# Nextcloud Talk Ports (optional, für Echtzeit)
+ufw allow 2053/tcp comment "Nextcloud Talk Alternative Port 1"
+ufw allow 2054/tcp comment "Nextcloud Talk Alternative Port 2"
+ufw allow 2055/tcp comment "Nextcloud Talk Alternative Port 3"
+ufw allow 2056/tcp comment "Nextcloud Talk Alternative Port 4"
+
+# Aktivieren
+ufw enable
+
+# Status zeigen
+ufw status verbose
+```
+
+---
+
+## Netzwerk-Topologie (einfache Variante)
+
+```
+Internet
+    │
+    ▼
+    ┌─────────────────────────────────────┐
+    │           SASA-IT Host              │
+    │                                     │
+    │  ┌─────────────────────────────────┐│
+    │  │          Caddy                  ││
+    │  │  Port 80/443                    ││
+    │  │  SSL: LetsEncrypt               ││
+    │  │                                 ││
+    │  │  Routed Domains:                ││
+    │  │  - sasa-it.de → /var/www/...    ││
+    │  │  - auth.sasa-it.de → :9000     ││
+    │  │  - office.sasa-it.de → :8080   ││
+    │  │  - sso.sasa-it.de → :3000      ││
+    │  └─────────────────────────────────┘│
+    │                                     │
+    │  ┌─────────────────────────────────┐│
+    │  │       Docker Compose            ││
+    │  │                                 ││
+    │  │  - Authentik (Port 9000)       ││
+    │  │  - Nextcloud AIO (Port 8080)   ││
+    │  │  - NetBird (Port 3000)         ││
+    │  └─────────────────────────────────┘│
+    │                                     │
+    │  Firewall: UFW                      ││
+    │  - Nur 22/80/443 offen            ││
+    │  - SSH: Nur bestimmte IPs         ││
+    └─────────────────────────────────────┘
+```
+
+---
+
+## Nextcloud AIO Multi-Domain (später)
+
+Wenn Nextcloud AIO später mehrere Domains unterstützen soll (mit einem Talk Server):
+
+```
+office.sasa-it.de       → Nextcloud AIO Instanz 1
+kunde1.sasa-it.de       → Nextcloud AIO Instanz 2 (VPN)
+kunde2.sasa-it.de       → Nextcloud AIO Instanz 3 (VPN)
+
+All über:
+- 1 gemeinsamer Nextcloud Talk Server (zentral)
+- VPN/DNS-Tunnel für Kunden-Domains
+- Caddy reverse-proxies alle zum richtigen Nextcloud
+```
+
+**Aktuell:** Single Nextcloud AIO Instanz — später Multi-Domain mit VPN.
+
+---
+
+## Let's Encrypt Überprüfung
+
+Nach dem ersten Start Caddy überprüfen:
+
+```bash
+# Caddy logs prüfen
+sudo tail -f /var/log/caddy/caddy.log
+
+# SSL Zertifikat überprüfen
+openssl s_client -connect sasa-it.de:443 -servername sasa-it.de </dev/null 2>/dev/null | openssl x509 -noout -dates -subject
+
+# Für alle Subdomains:
+for domain in sasa-it.de auth.sasa-it.de office.sasa-it.de sso.sasa-it.de; do
+    echo "=== $domain ==="
+    openssl s_client -connect $domain:443 -servername $domain </dev/null 2>/dev/null | openssl x509 -noout -dates -subject 2>/dev/null || echo "Zertifikat nicht gefunden"
+done
+```
+
+---
+
+**Stand:** August 2026  
+**Datei:** `caddy/Caddyfile` + `docs/security-ssl.md`

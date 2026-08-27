@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "2053:2053"
+      - "2054:2054"
+      - "2055:2055"
+      - "2056:2056"
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    network_mode: host
+    # Alternativ: bridge mit ports, aber host ist einfacher für Reverse Proxy
+    # Bei mehreren Hosts: nur Ports 80, 443 auf Haupt-Host
+
+volumes:
+  caddy_data:
+  caddy_config:

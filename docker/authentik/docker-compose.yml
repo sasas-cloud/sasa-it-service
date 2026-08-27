@@ -1,0 +1,140 @@
+version: "3.8"
+
+networks:
+  authentik:
+    driver: bridge
+
+volumes:
+  authentik_postgres:
+    driver: local
+  authentik_redis:
+    driver: local
+  authentik_media:
+    driver: local
+  authentik_certs:
+    driver: local
+  authentik_templates:
+    driver: local
+
+services:
+  postgres:
+    image: docker.io/library/postgres:16-alpine
+    container_name: sasa-authentik-postgres
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d authentik -U authentik"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+    volumes:
+      - authentik_postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${PG_PASS:?Database password required}
+      POSTGRES_USER: ${PG_USER:-authentik}
+      POSTGRES_DB: ${PG_DB:-authentik}
+    env_file:
+      - .env
+    networks:
+      - authentik
+
+  redis:
+    image: docker.io/library/redis:7-alpine
+    container_name: sasa-authentik-redis
+    restart: unless-stopped
+    command: --save 60 1 --loglevel warning
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+    volumes:
+      - authentik_redis:/data
+    networks:
+      - authentik
+
+  server:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.1}
+    container_name: sasa-authentik-server
+    restart: unless-stopped
+    command: server
+    environment:
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgres
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?Secret key required}
+    volumes:
+      - ./authentik/media:/media
+      - ./authentik/certs:/certs
+      - ./authentik/templates:/templates
+    env_file:
+      - .env
+    ports:
+      - "${AUTHENTIK_HTTP_PORT:-9000}:9000"
+      - "${AUTHENTIK_HTTPS_PORT:-9443}:9443"
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - authentik
+
+  worker:
+    image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.8.1}
+    container_name: sasa-authentik-worker
+    restart: unless-stopped
+    command: worker
+    environment:
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_POSTGRESQL__HOST: postgres
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY:?Secret key required}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./authentik/media:/media
+      - ./authentik/certs:/certs
+      - ./authentik/templates:/templates
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - authentik
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: sasa-authentik-caddy
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./authentik/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    network_mode: host
+    logging:
+      driver: json-file
+      options:
+        max-size: 5m
+        max-file: 2
+
+volumes:
+  caddy_data:
+    driver: local
+  caddy_config:
+    driver: local
+
+# Caddyfile für Authentik (separate in ./authentik/Caddyfile)
+# Beispiel:
+# auth.sasa-it.de {
+#   reverse_proxy localhost:9000
+#   header {
+#     +Strict-Transport-Security "max-age=31536000"
+#   }
+# }

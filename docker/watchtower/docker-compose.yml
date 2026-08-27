@@ -1,0 +1,29 @@
+version: "3.8"
+
+services:
+  watchtower:
+    image: containrrr/watchtower:latest
+    container_name: watchtower
+    restart: unless-stopped
+    environment:
+      - WATCHTOWER_HTTP_USERNAME=${WATCHTOWER_HTTP_USERNAME:-admin}
+      - WATCHTOWER_HTTP_PASSWORD=${WATCHTOWER_HTTP_PASSWORD:-sasa-it-secure-password}
+      - WATCHTOWER_REGISTRY=ghcr.io
+      - WATCHTOWER_REGISTRY_USERNAME=${REGISTRY_USERNAME:-sasas-cloud}
+      - WATCHTOWER_REGISTRY_PASSWORD=${REGISTRY_PASSWORD:-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}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command: >
+      --interval 300
+      --cleanup
+      --include-stopped=false
+      --label=com.sasas-cloud.managed=true
+      --healthcheck
+      --debug
+    labels:
+      - "com.sasas-cloud.managed=true"
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: 3
