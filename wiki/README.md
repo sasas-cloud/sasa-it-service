@@ -37,6 +37,8 @@ Das Wiki wird mit KI-Unterstützung erstellt und gepflegt. Jeder Eintrag wird vo
 | [Multi-Model Router](wiki/multi-model-router.md) | Intelligente Modell-Auswahl |
 | [Hermes Agent](wiki/hermes-agent.md) | Cloud AI Assistant |
 | [Jupyter Notebooks](wiki/jupyter-notebooks.md) | Datenanalyse, KI-Experimente |
+| [Design-Tokens](wiki/design-tokens.md) | Einheitliche Design-Tokens — Single Source of Truth |
+| [HTML/CSS Best Practices](wiki/html-css-best-practices.md) | Regeln für HTML/CSS-Entwicklung |
 
 ---
 
