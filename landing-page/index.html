@@ -3,895 +3,1709 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SASA-IT — IT-Dienstleistungen | Haustechnik | Facility Management</title>
+  <title>SASA-IT — IT-Dienstleistungen, Budget & Karriere</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
   <style>
+    /* === SASA-IT Design Tokens (Stripe/Linear Hybrid) === */
     :root {
-      --color-primary: #0A0A0A;
-      --color-secondary: #1A1A1A;
-      --color-surface: #FAFAFA;
-      --color-accent: #0066FF;
-      --color-accent-dark: #004A99;
-      --color-text: #111111;
-      --color-text-muted: #666666;
-      --color-border: #E5E5E5;
-      --color-success: #00A36C;
-      --color-danger: #D32F2F;
-      --color-warning: #FF8C00;
+      /* Stripe-inspired palette: clean, professional, trustworthy */
+      --color-primary: #0a0a0a;
+      --color-surface: #ffffff;
+      --color-surface-alt: #f7f7f7;
+      --color-surface-dark: #1a1a1a;
+      --color-text: #1a1a1a;
+      --color-text-muted: #6b7280;
+      --color-text-inverse: #ffffff;
+      --color-border: #e5e7eb;
+      --color-border-dark: #374151;
+      --color-accent: #635bff;        /* Stripe violet-blue */
+      --color-accent-dark: #4b43d6;
+      --color-success: #059669;
+      --color-warning: #d97706;
+      --color-danger: #dc2626;
+      --color-info: #0284c7;
 
-      --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-body: 'Inter', system-ui, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      /* Linear-inspired: dark surface, green accent for dashboard */
+      --color-dashboard-bg: #0d1117;
+      --color-dashboard-card: #161b22;
+      --color-dashboard-border: #30363d;
+      --color-dashboard-text: #c9d1d9;
+      --color-dashboard-muted: #8b949e;
+      --color-dashboard-accent: #00a36c; /* green */
 
-      --radius-sm: 4px;
-      --radius-md: 8px;
-      --radius-lg: 12px;
-      --radius-xl: 16px;
+      /* Typography */
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Source Code Pro', 'JetBrains Mono', monospace;
+
+      /* Radius */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
       --radius-full: 9999px;
 
-      --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
-      --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
       --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
-      --shadow-glow: 0 0 24px rgba(0,102,255,0.35);
+      --shadow-glow: 0 0 20px rgba(99,91,255,0.3);
+
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+
+      /* Layout */
+      --max-width: 1200px;
+      --nav-height: 72px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
+    /* === Reset === */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
     body {
-      font-family: var(--font-body);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.6;
       color: var(--color-text);
       background: var(--color-surface);
-      line-height: 1.6;
-      font-size: 16px;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
-
     a { color: var(--color-accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
+    img, svg { max-width: 100%; display: block; }
 
-    img { max-width: 100%; height: auto; }
-
+    /* === Layout Utilities === */
     .container {
-      max-width: 1200px;
+      max-width: var(--max-width);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 var(--space-lg);
+    }
+    .flex { display: flex; }
+    .flex-center { display: flex; align-items: center; justify-content: center; }
+    .flex-between { display: flex; align-items: center; justify-content: space-between; }
+    .gap-sm { gap: var(--space-sm); }
+    .gap-md { gap: var(--space-md); }
+    .gap-lg { gap: var(--space-lg); }
+    .grid { display: grid; }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    .grid-4 { grid-template-columns: repeat(4, 1fr); }
+    @media (max-width: 900px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     }
 
-    /* Navigation */
+    /* === Navigation === */
     .nav {
-      height: 72px;
-      background: var(--color-primary);
-      color: #fff;
-      position: sticky;
+      position: fixed;
       top: 0;
-      z-index: 100;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      z-index: 1000;
     }
-
     .nav-inner {
-      max-width: 1200px;
+      max-width: var(--max-width);
       margin: 0 auto;
-      padding: 0 24px;
+      padding: 0 var(--space-lg);
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-
     .nav-logo {
-      font-family: var(--font-display);
+      font-size: 1.25rem;
       font-weight: 800;
-      font-size: 1.5rem;
+      color: var(--color-text);
       letter-spacing: -0.02em;
-      color: #fff;
-      text-decoration: none;
     }
-
-    .nav-logo span {
-      color: var(--color-accent);
-    }
-
+    .nav-logo span { color: var(--color-accent); }
     .nav-links {
       display: flex;
-      gap: 32px;
       align-items: center;
+      gap: var(--space-md);
     }
-
     .nav-link {
-      font-family: var(--font-body);
+      font-size: 0.875rem;
       font-weight: 500;
-      font-size: 0.9375rem;
-      color: rgba(255,255,255,0.7);
-      text-decoration: none;
-      transition: color 0.2s ease;
+      color: var(--color-text-muted);
+      padding: var(--space-sm) var(--space-md);
+      border-radius: var(--radius-sm);
+      transition: background 0.15s ease, color 0.15s ease;
     }
-
     .nav-link:hover {
-      color: #fff;
+      background: var(--color-surface-alt);
+      color: var(--color-text);
       text-decoration: none;
     }
-
     .nav-cta {
       background: var(--color-accent);
-      color: #fff;
+      color: var(--color-text-inverse);
+      font-size: 0.875rem;
       font-weight: 600;
-      font-size: 0.9375rem;
-      padding: 10px 20px;
-      border-radius: var(--radius-md);
-      text-decoration: none;
-      transition: all 0.2s ease;
+      padding: 10px 18px;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s ease, transform 0.15s ease;
     }
-
     .nav-cta:hover {
       background: var(--color-accent-dark);
-      box-shadow: var(--shadow-glow);
+      transform: translateY(-1px);
       text-decoration: none;
     }
-
-    /* Hero Section */
-    .hero {
-      background: var(--color-primary);
-      color: #fff;
-      padding: 100px 0 80px;
-      position: relative;
-      overflow: hidden;
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
     }
 
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 50%;
-      height: 100%;
-      background: linear-gradient(135deg, rgba(0,102,255,0.08) 0%, transparent 60%);
-      pointer-events: none;
-    }
-
-    .hero-content {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-      padding: 0 24px;
-      position: relative;
-      z-index: 1;
-    }
-
-    .hero-badge {
-      display: inline-block;
-      background: rgba(0,102,255,0.15);
-      color: var(--color-accent);
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 6px 16px;
-      border-radius: var(--radius-full);
-      margin-bottom: 24px;
-    }
-
-    .hero-title {
-      font-family: var(--font-display);
-      font-weight: 800;
-      font-size: 4rem;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      margin-bottom: 24px;
-    }
-
-    .hero-title span {
-      color: var(--color-accent);
-    }
-
-    .hero-subtitle {
-      font-family: var(--font-body);
-      font-size: 1.25rem;
-      color: rgba(255,255,255,0.7);
-      line-height: 1.5;
-      margin-bottom: 40px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 16px;
+    /* === Button Base === */
+    .btn {
+      display: inline-flex;
+      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      text-decoration: none;
     }
-
     .btn-primary {
       background: var(--color-accent);
-      color: #fff;
-      font-family: var(--font-body);
-      font-weight: 600;
-      font-size: 0.9375rem;
-      padding: 14px 32px;
-      border-radius: var(--radius-md);
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
+      color: var(--color-text-inverse);
     }
-
     .btn-primary:hover {
       background: var(--color-accent-dark);
-      box-shadow: var(--shadow-glow);
-      transform: translateY(-2px);
       text-decoration: none;
+      transform: translateY(-1px);
     }
-
     .btn-secondary {
       background: transparent;
-      color: #fff;
-      font-family: var(--font-body);
-      font-weight: 500;
-      font-size: 0.9375rem;
-      padding: 14px 32px;
-      border-radius: var(--radius-md);
-      border: 1px solid rgba(255,255,255,0.3);
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s ease;
+      color: var(--color-text);
+      border-color: var(--color-border);
     }
-
     .btn-secondary:hover {
-      border-color: rgba(255,255,255,0.6);
-      background: rgba(255,255,255,0.05);
+      background: var(--color-surface-alt);
+      border-color: var(--color-text-muted);
       text-decoration: none;
     }
-
-    /* Services Section */
-    .services {
-      padding: 80px 0;
-      background: var(--color-surface);
+    .btn-dark {
+      background: var(--color-dashboard-bg);
+      color: var(--color-dashboard-text);
+      border-color: var(--color-dashboard-border);
     }
+    .btn-dark:hover {
+      background: var(--color-dashboard-card);
+      text-decoration: none;
+    }
+    .btn-sm { padding: 6px 14px; font-size: 0.8125rem; }
+    .btn-lg { padding: 14px 28px; font-size: 0.9375rem; }
 
+    /* === Section === */
+    .section {
+      padding: var(--space-3xl) 0;
+    }
     .section-header {
       text-align: center;
-      margin-bottom: 56px;
+      margin-bottom: var(--space-2xl);
     }
-
     .section-label {
       display: inline-block;
-      font-family: var(--font-mono);
       font-size: 0.75rem;
-      font-weight: 500;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.08em;
       color: var(--color-accent);
-      margin-bottom: 16px;
+      background: rgba(99,91,255,0.08);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-md);
     }
-
     .section-title {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 2.5rem;
-      letter-spacing: -0.02em;
-      margin-bottom: 16px;
+      font-size: 2.25rem;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      line-height: 1.2;
+      margin-bottom: var(--space-md);
     }
-
-    .section-subtitle {
-      font-family: var(--font-body);
+    .section-desc {
       font-size: 1.0625rem;
       color: var(--color-text-muted);
-      max-width: 600px;
+      max-width: 640px;
       margin: 0 auto;
     }
 
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-
-    .service-card {
+    /* === Cards === */
+    .card {
       background: var(--color-surface);
       border: 1px solid var(--color-border);
       border-radius: var(--radius-lg);
-      padding: 32px;
-      transition: all 0.2s ease;
+      padding: var(--space-xl);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-
-    .service-card:hover {
-      box-shadow: var(--shadow-md);
+    .card:hover {
       transform: translateY(-4px);
-      border-color: rgba(0,102,255,0.2);
+      box-shadow: var(--shadow-md);
+    }
+    .card-dark {
+      background: var(--color-dashboard-card);
+      border: 1px solid var(--color-dashboard-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
     }
 
-    .service-icon {
+    /* === Footer === */
+    .footer {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      padding: var(--space-3xl) 0 var(--space-xl);
+      margin-top: var(--space-3xl);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: var(--space-2xl);
+      margin-bottom: var(--space-2xl);
+    }
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr; }
+    }
+    .footer-brand h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+    }
+    .footer-brand h3 span { color: var(--color-accent); }
+    .footer-desc {
+      font-size: 0.875rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+    .footer-col h4 {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-md);
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: var(--space-sm); }
+    .footer-col a {
+      font-size: 0.875rem;
+      color: rgba(255,255,255,0.7);
+      transition: color 0.15s ease;
+    }
+    .footer-col a:hover { color: #fff; text-decoration: none; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: var(--space-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8125rem;
+      color: rgba(255,255,255,0.5);
+    }
+    @media (max-width: 600px) {
+      .footer-bottom { flex-direction: column; gap: var(--space-sm); text-align: center; }
+    }
+
+    /* === Hero === */
+    .hero {
+      padding: calc(var(--nav-height) + var(--space-3xl)) 0 var(--space-3xl);
+      background: linear-gradient(180deg, #fafbff 0%, #ffffff 100%);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3xl);
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+    }
+    .hero-content { max-width: 560px; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--color-accent-dark);
+      background: rgba(99,91,255,0.08);
+      border: 1px solid rgba(99,91,255,0.2);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-lg);
+    }
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: var(--color-accent);
+      border-radius: var(--radius-full);
+    }
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: var(--space-lg);
+    }
+    .hero-title .highlight {
+      color: var(--color-accent);
+      background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-desc {
+      font-size: 1.125rem;
+      color: var(--color-text-muted);
+      line-height: 1.6;
+      margin-bottom: var(--space-xl);
+    }
+    .hero-actions {
+      display: flex;
+      gap: var(--space-md);
+      flex-wrap: wrap;
+    }
+    .hero-stats {
+      display: flex;
+      gap: var(--space-xl);
+      margin-top: var(--space-xl);
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--color-border);
+    }
+    .hero-stat-value {
+      font-size: 1.75rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--color-text);
+    }
+    .hero-stat-label {
+      font-size: 0.8125rem;
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+
+    .hero-visual {
+      background: var(--color-dashboard-bg);
+      border-radius: var(--radius-xl);
+      padding: var(--space-xl);
+      border: 1px solid var(--color-dashboard-border);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-visual::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -30%;
+      width: 80%;
+      height: 100%;
+      background: radial-gradient(ellipse, rgba(99,91,255,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .visual-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-dashboard-muted);
+      margin-bottom: var(--space-md);
+    }
+    .visual-bar {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-md);
+    }
+    .visual-bar-item {
+      flex: 1;
+      height: 12px;
+      background: var(--color-dashboard-border);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    .visual-bar-item .fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      background: var(--color-accent);
+    }
+    .visual-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-dashboard-border);
+    }
+    .visual-row:last-child { border-bottom: none; }
+    .visual-row-label {
+      font-size: 0.8125rem;
+      color: var(--color-dashboard-muted);
+    }
+    .visual-row-value {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-dashboard-text);
+      font-family: var(--font-mono);
+    }
+    .visual-row-value.green { color: var(--color-dashboard-accent); }
+    .visual-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      background: rgba(0,163,108,0.1);
+      color: var(--color-dashboard-accent);
+      border: 1px solid rgba(0,163,108,0.2);
+    }
+    .visual-pill.live { background: rgba(191,90,242,0.1); color: #bf5af2; border-color: rgba(191,90,242,0.2); }
+
+    /* === Feature Grid === */
+    .features {
+      background: var(--color-surface-alt);
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+    }
+    .feature-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .feature-icon {
       width: 48px;
       height: 48px;
-      background: var(--color-accent);
+      background: rgba(99,91,255,0.08);
       border-radius: var(--radius-md);
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: var(--space-md);
       font-size: 1.5rem;
     }
-
-    .service-title {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 1.25rem;
-      margin-bottom: 12px;
+    .feature-title {
+      font-size: 1.125rem;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
     }
-
-    .service-description {
-      font-family: var(--font-body);
+    .feature-desc {
       font-size: 0.9375rem;
       color: var(--color-text-muted);
-      line-height: 1.6;
-    }
-
-    .service-link {
-      display: inline-block;
-      margin-top: 16px;
-      font-family: var(--font-body);
-      font-weight: 500;
-      font-size: 0.9375rem;
-      color: var(--color-accent);
-    }
-
-    .service-link:hover {
-      text-decoration: underline;
-    }
-
-    /* Features Section */
-    .features {
-      padding: 80px 0;
-      background: var(--color-primary);
-      color: #fff;
-    }
-
-    .features .section-title {
-      color: #fff;
-    }
-
-    .features .section-subtitle {
-      color: rgba(255,255,255,0.6);
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-    }
-
-    .feature-item {
-      padding: 24px;
-    }
-
-    .feature-item strong {
-      display: block;
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 1.0625rem;
-      margin-bottom: 8px;
-      color: var(--color-accent);
-    }
-
-    .feature-item span {
-      font-family: var(--font-body);
-      font-size: 0.9375rem;
-      color: rgba(255,255,255,0.7);
       line-height: 1.5;
     }
 
-    /* Wiki Teaser Section */
-    .wiki-teaser {
-      padding: 60px 0;
-      background: var(--color-surface);
-      text-align: center;
+    /* === Budget Table === */
+    .budget-section {
+      background: var(--color-dashboard-bg);
+      color: var(--color-dashboard-text);
     }
-
-    .wiki-teaser .container {
-      max-width: 700px;
+    .budget-section .section-title { color: var(--color-dashboard-text); }
+    .budget-section .section-desc { color: var(--color-dashboard-muted); }
+    .budget-section .section-label {
+      background: rgba(0,163,108,0.1);
+      color: var(--color-dashboard-accent);
+      border: 1px solid rgba(0,163,108,0.2);
     }
-
-    .wiki-teaser-text {
-      font-family: var(--font-body);
-      font-size: 1.0625rem;
-      color: var(--color-text-muted);
-      line-height: 1.6;
-      margin-bottom: 24px;
+    .budget-card {
+      background: var(--color-dashboard-card);
+      border: 1px solid var(--color-dashboard-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
     }
-
-    .wiki-teaser-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-body);
+    .budget-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+    .budget-table th {
+      text-align: left;
+      padding: var(--space-md) var(--space-md);
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--color-dashboard-muted);
+      border-bottom: 1px solid var(--color-dashboard-border);
+    }
+    .budget-table td {
+      padding: var(--space-md) var(--space-md);
+      border-bottom: 1px solid var(--color-dashboard-border);
+      vertical-align: middle;
+    }
+    .budget-table tr:last-child td { border-bottom: none; }
+    .budget-table .name {
+      font-weight: 600;
+      color: var(--color-dashboard-text);
+    }
+    .budget-table .value {
+      font-family: var(--font-mono);
       font-weight: 500;
-      font-size: 0.9375rem;
+      text-align: right;
+      color: var(--color-dashboard-accent);
+    }
+    .budget-table .value .currency {
+      font-size: 0.75rem;
+      color: var(--color-dashboard-muted);
+      margin-right: 4px;
+    }
+    .budget-tag {
+      display: inline-block;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 2px 8px;
+      border-radius: var(--radius-full);
+      background: rgba(99,91,255,0.1);
       color: var(--color-accent);
     }
-
-    .wiki-teaser-link:hover {
-      text-decoration: underline;
+    .budget-tag.green {
+      background: rgba(0,163,108,0.1);
+      color: var(--color-dashboard-accent);
     }
-
-    /* AI Section */
-    .ai-section {
-      padding: 80px 0;
-      background: var(--color-surface);
+    .budget-tag.amber {
+      background: rgba(217,119,6,0.1);
+      color: var(--color-warning);
     }
-
-    .ai-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-items: center;
+    .budget-total {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--color-dashboard-text);
+      margin-top: var(--space-lg);
     }
-
-    .ai-content h2 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 2rem;
-      letter-spacing: -0.02em;
-      margin-bottom: 20px;
+    .budget-total .currency {
+      font-size: 1rem;
+      color: var(--color-dashboard-muted);
+      margin-right: 8px;
+      font-weight: 500;
     }
-
-    .ai-content p {
-      font-family: var(--font-body);
-      font-size: 1.0625rem;
-      color: var(--color-text-muted);
-      line-height: 1.6;
-      margin-bottom: 16px;
+    .budget-note {
+      margin-top: var(--space-lg);
+      padding: var(--space-md);
+      background: rgba(99,91,255,0.05);
+      border: 1px solid rgba(99,91,255,0.15);
+      border-radius: var(--radius-md);
+      font-size: 0.8125rem;
+      color: var(--color-dashboard-muted);
+      line-height: 1.5;
     }
+    .budget-note strong { color: var(--color-dashboard-text); }
 
-    .ai-card {
-      background: var(--color-primary);
+    /* === Career === */
+    .career-card {
+      background: var(--color-dashboard-card);
+      border: 1px solid var(--color-dashboard-border);
       border-radius: var(--radius-lg);
-      padding: 32px;
-      color: #fff;
-    }
-
-    .ai-card h3 {
-      font-family: var(--font-display);
-      font-weight: 600;
-      font-size: 1.25rem;
-      margin-bottom: 16px;
-    }
-
-    .ai-card ul {
-      list-style: none;
+      padding: var(--space-xl);
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: var(--space-lg);
     }
-
-    .ai-card li {
-      font-family: var(--font-body);
-      font-size: 0.9375rem;
-      color: rgba(255,255,255,0.7);
+    .career-card h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--color-dashboard-text);
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: var(--space-sm);
     }
-
-    .ai-card li::before {
-      content: '✓';
-      color: var(--color-success);
-      font-weight: 700;
-    }
-
-    /* Footer */
-    .footer {
-      background: var(--color-primary);
-      color: rgba(255,255,255,0.6);
-      padding: 48px 0 32px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 48px;
-      margin-bottom: 40px;
-    }
-
-    .footer-brand h4 {
-      font-family: var(--font-display);
-      font-weight: 700;
-      font-size: 1.25rem;
-      color: #fff;
-      margin-bottom: 12px;
-    }
-
-    .footer-brand h4 span {
-      color: var(--color-accent);
-    }
-
-    .footer-desc {
-      font-family: var(--font-body);
+    .career-card h3 .emoji { font-size: 1.25rem; }
+    .career-card p {
       font-size: 0.9375rem;
+      color: var(--color-dashboard-muted);
       line-height: 1.5;
-      margin-bottom: 16px;
     }
-
-    .footer-col h5 {
-      font-family: var(--font-display);
+    .career-level {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+    }
+    .career-level-bar {
+      flex: 1;
+      height: 8px;
+      background: var(--color-dashboard-border);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+    .career-level-bar .fill {
+      height: 100%;
+      border-radius: var(--radius-full);
+      background: var(--color-dashboard-accent);
+    }
+    .career-level-label {
+      font-size: 0.8125rem;
       font-weight: 600;
+      font-family: var(--font-mono);
+      color: var(--color-dashboard-accent);
+      min-width: 48px;
+      text-align: right;
+    }
+    .career-skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm);
+    }
+    .career-skill {
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 4px 12px;
+      background: rgba(99,91,255,0.1);
+      color: var(--color-accent);
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(99,91,255,0.2);
+    }
+
+    /* === Tab Navigation === */
+    .tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: var(--space-xl);
+    }
+    .tab {
+      padding: var(--space-md) var(--space-lg);
       font-size: 0.875rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 16px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      border: none;
+      background: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s ease, border-color 0.15s ease;
+      margin-bottom: -1px;
+    }
+    .tab:hover { color: var(--color-text); }
+    .tab.active {
+      color: var(--color-accent);
+      border-bottom-color: var(--color-accent);
     }
 
-    .footer-col ul {
-      list-style: none;
+    /* === Toggle === */
+    .toggle-group {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    .toggle-btn {
+      padding: var(--space-sm) var(--space-lg);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      color: var(--color-text-muted);
+    }
+    .toggle-btn:hover { border-color: var(--color-text-muted); color: var(--color-text); }
+    .toggle-btn.active {
+      background: var(--color-accent);
+      color: var(--color-text-inverse);
+      border-color: var(--color-accent);
     }
 
-    .footer-col li {
-      margin-bottom: 8px;
+    /* === Form === */
+    .form-group {
+      margin-bottom: var(--space-lg);
+    }
+    .form-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-sm);
+    }
+    .form-input {
+      width: 100%;
+      padding: 10px 14px;
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      color: var(--color-text);
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .form-input:focus {
+      outline: none;
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(99,91,255,0.1);
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-md);
+    }
+    @media (max-width: 600px) {
+      .form-row { grid-template-columns: 1fr; }
     }
 
-    .footer-col a {
-      font-family: var(--font-body);
-      font-size: 0.9375rem;
-      color: rgba(255,255,255,0.6);
-      text-decoration: none;
-      transition: color 0.2s ease;
+    /* === Result Panel === */
+    .result-panel {
+      background: var(--color-dashboard-card);
+      border: 1px solid var(--color-dashboard-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-top: var(--space-lg);
     }
-
-    .footer-col a:hover {
-      color: #fff;
-      text-decoration: none;
-    }
-
-    .footer-bottom {
-      border-top: 1px solid rgba(255,255,255,0.1);
-      padding-top: 24px;
+    .result-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-family: var(--font-body);
-      font-size: 0.8125rem;
-      color: rgba(255,255,255,0.4);
+      padding: var(--space-sm) 0;
+      border-bottom: 1px solid var(--color-dashboard-border);
+      font-size: 0.875rem;
     }
-
-    .footer-bottom-links {
+    .result-row:last-child { border-bottom: none; }
+    .result-row-label { color: var(--color-dashboard-muted); }
+    .result-row-value {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      color: var(--color-dashboard-text);
+    }
+    .result-row-value.positive { color: var(--color-dashboard-accent); }
+    .result-total {
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-top: var(--space-md);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--color-dashboard-border);
       display: flex;
-      gap: 24px;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .result-total .value {
+      font-family: var(--font-mono);
+      color: var(--color-dashboard-accent);
     }
 
-    .footer-bottom a {
-      color: rgba(255,255,255,0.4);
+    /* === Charts (CSS only) === */
+    .chart-container {
+      margin: var(--space-xl) 0;
+    }
+    .chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: var(--space-sm);
+      height: 120px;
+      padding: 0 var(--space-md);
+    }
+    .chart-bar {
+      flex: 1;
+      background: var(--color-accent);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      transition: height 0.3s ease;
+      min-height: 4px;
+      position: relative;
+    }
+    .chart-bar:hover { opacity: 0.8; }
+    .chart-bar-label {
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6875rem;
+      color: var(--color-text-muted);
+      white-space: nowrap;
+    }
+    .chart-bar-value {
+      position: absolute;
+      top: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+      color: var(--color-text);
+    }
+    .chart-donut {
+      width: 120px;
+      height: 120px;
+      border-radius: var(--radius-full);
+      background: conic-gradient(
+        var(--color-accent) 0deg 180deg,
+        var(--color-dashboard-border) 180deg 360deg
+      );
+      position: relative;
+      margin: 0 auto;
+    }
+    .chart-donut-hole {
+      width: 80px;
+      height: 80px;
+      border-radius: var(--radius-full);
+      background: var(--color-dashboard-card);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--color-dashboard-text);
+      font-family: var(--font-mono);
     }
 
-    .footer-bottom a:hover {
-      color: rgba(255,255,255,0.7);
+    /* === Animations === */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      .hero-title {
-        font-size: 2.5rem;
-      }
-
-      .hero-subtitle {
-        font-size: 1rem;
-      }
-
-      .nav-links {
-        display: none;
-      }
-
-      .ai-grid {
-        grid-template-columns: 1fr;
-        gap: 32px;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 32px;
-      }
-
-      .footer-bottom {
-        flex-direction: column;
-        gap: 16px;
-        text-align: center;
-      }
-
-      .footer-bottom-links {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
+    .animate-in {
+      animation: fadeInUp 0.4s ease forwards;
     }
+    .delay-1 { animation-delay: 0.1s; }
+    .delay-2 { animation-delay: 0.2s; }
+    .delay-3 { animation-delay: 0.3s; }
 
-    @media (max-width: 480px) {
-      .hero {
-        padding: 60px 0 48px;
-      }
-
-      .hero-title {
-        font-size: 2rem;
-      }
-
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .features-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-    }
+    /* === Scrollbar === */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--color-surface-alt); }
+    ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
   </style>
 </head>
 <body>
-  <!-- Navigation -->
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo">SASA<span>-IT</span></a>
-      <div class="nav-links">
-        <a href="#services" class="nav-link">Services</a>
-        <a href="#features" class="nav-link">Warum SASA-IT</a>
-        <a href="https://sasa-it.de/wiki" class="nav-link">Wiki</a>
-        <a href="https://auth.sasa-it.de" class="nav-cta">Portal</a>
+
+<!-- Navigation -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">SASA<span>-IT</span></a>
+    <div class="nav-links">
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#budget" class="nav-link">Budget</a>
+      <a href="#career" class="nav-link">Karriere</a>
+      <a href="#planning" class="nav-link">Planung</a>
+      <a href="#contact" class="nav-cta">Kontakt</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge animate-in">
+          <span class="dot"></span>
+          IT-Dienstleistungen · seit 2024
+        </div>
+        <h1 class="hero-title animate-in delay-1">
+          Dein Partner für<br>
+          <span class="highlight">IT-Infrastruktur</span> &<br>
+          Facility Management
+        </h1>
+        <p class="hero-desc animate-in delay-2">
+          Professionelle IT-Services für Unternehmen — Haustechnik, Gebäudeautomation,
+          Netzwerke, Cloud, Security. Lokal, persönlich, offen.
+        </p>
+        <div class="hero-actions animate-in delay-3">
+          <a href="#services" class="btn btn-primary btn-lg">Services entdecken →</a>
+          <a href="#budget" class="btn btn-secondary btn-lg">Kosten schätzen</a>
+        </div>
+        <div class="hero-stats animate-in delay-3">
+          <div>
+            <div class="hero-stat-value">6</div>
+            <div class="hero-stat-label">Servicebereiche</div>
+          </div>
+          <div>
+            <div class="hero-stat-value">24/7</div>
+            <div class="hero-stat-label">Support verfügbar</div>
+          </div>
+          <div>
+            <div class="hero-stat-value">100%</div>
+            <div class="hero-stat-label">Open Source</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-visual animate-in delay-2">
+        <div class="visual-title">SASA-IT Dashboard · Live</div>
+        <div style="margin-bottom: var(--space-md);">
+          <div class="visual-pill live">● System online</div>
+          <div class="visual-pill" style="margin-left: var(--space-sm);">SSL aktiv</div>
+        </div>
+        <div class="visual-bar">
+          <div class="visual-bar-item"><div class="fill" style="width: 92%;"></div></div>
+          <div class="visual-bar-item"><div class="fill" style="width: 78%; background: var(--color-dashboard-accent);"></div></div>
+          <div class="visual-bar-item"><div class="fill" style="width: 100%; background: var(--color-success);"></div></div>
+          <div class="visual-bar-item"><div class="fill" style="width: 65%; background: var(--color-warning);"></div></div>
+        </div>
+        <div class="visual-row">
+          <span class="visual-row-label">NetBird VPN</span>
+          <span class="visual-row-value green">Aktiv · 12 Geräte</span>
+        </div>
+        <div class="visual-row">
+          <span class="visual-row-label">Nextcloud AIO</span>
+          <span class="visual-row-value">32 GB / 128 GB</span>
+        </div>
+        <div class="visual-row">
+          <span class="visual-row-label">NIM API</span>
+          <span class="visual-row-value green">84 Modelle</span>
+        </div>
+        <div class="visual-row" style="border-bottom: none; padding-bottom: 0;">
+          <span class="visual-row-label">Uptime</span>
+          <span class="visual-row-value green">99.97%</span>
+        </div>
       </div>
     </div>
-  </nav>
+  </div>
+</section>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <div class="hero-content">
-      <div class="hero-badge">IT-Dienstleistungen · seit 2024</div>
-      <h1 class="hero-title">
-        Ihr Partner für<br>
-        <span>IT-Infrastruktur</span> &<br>
-        Facility Management
-      </h1>
-      <p class="hero-subtitle">
-        Professionelle IT-Dienstleistungen für Unternehmen — von der Netzwerk-Basis bis zum intelligenten Gebäude-Management.
-        Sicher, zuverlässig, lokal.
+<!-- Services -->
+<section class="section features" id="services">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Services</div>
+      <h2 class="section-title">Was wir bieten</h2>
+      <p class="section-desc">
+        Kompetenz in allen Bereichen moderner IT-Infrastruktur — von der Planung bis zum 24/7 Support.
       </p>
-      <div class="hero-actions">
-        <a href="#services" class="btn-primary">Services entdecken</a>
-        <a href="https://auth.sasa-it.de" class="btn-secondary">Zum Portal →</a>
-      </div>
     </div>
-  </section>
-
-  <!-- Services Section -->
-  <section class="services" id="services">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-label">Services</div>
-        <h2 class="section-title">Was wir bieten</h2>
-        <p class="section-subtitle">
-          Kompetenz in allen Bereichen moderner IT-Infrastruktur — von der Planung bis zum 24/7 Support.
+    <div class="grid grid-3" style="gap: var(--space-lg);">
+      <div class="feature-card">
+        <div class="feature-icon">🏠</div>
+        <h3 class="feature-title">Haustechnik</h3>
+        <p class="feature-desc">
+          Smart Home, Gebäudeautomation, Überwachung. Wir planen und implementieren intelligente
+          Lösungen für Ihr Gebäude — sicher und zukunftsfähig.
         </p>
       </div>
-
-      <div class="services-grid">
-        <article class="service-card">
-          <div class="service-icon">🏠</div>
-          <h3 class="service-title">Haustechnik</h3>
-          <p class="service-description">
-            Smart Home, Gebäudeautomation, Überwachungssysteme. Wir planen und implementieren intelligente
-            Lösungen für Ihr Gebäude — sicher und zukunftsfähig.
-          </p>
-          <a href="https://sasa-it.de/wiki/haustechnik" class="service-link">Mehr erfahren →</a>
-        </article>
-
-        <article class="service-card">
-          <div class="service-icon">🏢</div>
-          <h3 class="service-title">Facility Management</h3>
-          <p class="service-description">
-            Gebäudemanagement, Wartung, Energie-Management, Raumaufteilung. Ihr Gebäude läuft rund — wir sorgen dafür.
-          </p>
-          <a href="https://sasa-it.de/wiki/facility-management" class="service-link">Mehr erfahren →</a>
-        </article>
-
-        <article class="service-card">
-          <div class="service-icon">🌐</div>
-          <h3 class="service-title">IT-Infrastruktur</h3>
-          <p class="service-description">
-            Netzwerke, Server, Cloud, Backup, Security. Wir bauen und betreiben die technische Basis — stabil und skalierbar.
-          </p>
-          <a href="https://sasa-it.de/wiki/it-infrastruktur" class="service-link">Mehr erfahren →</a>
-        </article>
-
-        <article class="service-card">
-          <div class="service-icon">🔒</div>
-          <h3 class="service-title">Sicherheit & SSL</h3>
-          <p class="service-description">
-            SSL-Zertifikate, Firewalls, VPN, Zugangsschutz, Authentifizierung. Ihre Daten sind bei uns in sicherer Hand.
-          </p>
-          <a href="https://sasa-it.de/wiki/sicherheit" class="service-link">Mehr erfahren →</a>
-        </article>
-
-        <article class="service-card">
-          <div class="service-icon">☁️</div>
-          <h3 class="service-title">Cloud & KI</h3>
-          <p class="service-description">
-            KI-Modelle, Cloud-Architektur, NVIDIA NIM, automatisierte Workflows. Zukunftsfähige Technologie für Ihr Business.
-          </p>
-          <a href="https://sasa-it.de/wiki/cloud-ai" class="service-link">Mehr erfahren →</a>
-        </article>
-
-        <article class="service-card">
-          <div class="service-icon">🛠️</div>
-          <h3 class="service-title">24/7 Support</h3>
-          <p class="service-description">
-            Rund-um-die-Uhr Support, Wartung, Überwachung, Notfall-Service. Wir sind da, wenn Sie uns brauchen.
-          </p>
-          <a href="https://auth.sasa-it.de" class="service-link">Support anfragen →</a>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section class="features" id="features">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-label" style="color: var(--color-accent);">Warum SASA-IT</div>
-        <h2 class="section-title" style="color: #fff;">Warum Kunden uns wählen</h2>
-        <p class="section-subtitle">
-          Mehr als ein IT-Dienstleister — Ihr Partner für digitale Transformation.
+      <div class="feature-card">
+        <div class="feature-icon">🏢</div>
+        <h3 class="feature-title">Facility Management</h3>
+        <p class="feature-desc">
+          Gebäudemanagement, Wartung, Energie-Management, Raumaufteilung. Ihr Gebäude läuft rund — wir sorgen dafür.
         </p>
       </div>
-
-      <div class="features-grid">
-        <div class="feature-item">
-          <strong>Lokal & Persönlich</strong>
-          <span>Mit Sitz im deutschsprachigen Raum — schnell erreichbar, verständlich, ohne Abteilungshemmungen.</span>
-        </div>
-        <div class="feature-item">
-          <strong>Offene Technologie</strong>
-          <span>Open Source, transparente Lösungen, keine Vendor-Lock-in. Sie besitzen Ihre Infrastruktur.</span>
-        </div>
-        <div class="feature-item">
-          <strong>Sicherheit First</strong>
-          <span>SSL, MFA, Firewall, VPN — Security ist kein Add-on, sondern Basis jeder Lösung.</span>
-        </div>
-        <div class="feature-item">
-          <strong>KI-gestützt</strong>
-          <span>Automatisierung, KI-Unterstützung für Support und Dokumentation — effizienter, schneller.</span>
-        </div>
-        <div class="feature-item">
-          <strong>Skalierbar</strong>
-          <span>Von Kleinunternehmen bis Unternehmen — Lösungen, die mitwachsen, ohne Neubauprojekte.</span>
-        </div>
-        <div class="feature-item">
-          <strong>24/7 Überwachung</strong>
-          <span>Ihre Systeme laufen rund — wir überwachen, warnen und kommen im Fehlerfall sofort.</span>
-        </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌐</div>
+        <h3 class="feature-title">IT-Infrastruktur</h3>
+        <p class="feature-desc">
+          Netzwerke, Server, Cloud, Backup, Security. Wir bauen und betreiben die technische Basis — stabil und skalierbar.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3 class="feature-title">Sicherheit & SSL</h3>
+        <p class="feature-desc">
+          SSL-Zertifikate, Firewalls, VPN, Zugangsschutz, Authentifizierung. Ihre Daten sind bei uns in sicherer Hand.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">☁️</div>
+        <h3 class="feature-title">Cloud & KI</h3>
+        <p class="feature-desc">
+          KI-Modelle, Cloud-Architektur, NVIDIA NIM, automatisierte Workflows. Zukunftsfähige Technologie.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🛠️</div>
+        <h3 class="feature-title">24/7 Support</h3>
+        <p class="feature-desc">
+          Rund-um-die-Uhr Support, Wartung, Überwachung, Notfall-Service. Wir sind da, wenn Sie uns brauchen.
+        </p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- AI Section -->
-  <section class="ai-section">
-    <div class="container">
-      <div class="ai-grid">
-        <div class="ai-content">
-          <h2>KI-gestützte IT-Dienstleistungen</h2>
-          <p>
-            Wir nutzen moderne KI-Modelle für effizientere Workflows — von der Dokumentation bis zum Support.
-            Unsere Plattform verbindet verschiedene Modelle (NVIDIA NIM, GPT, Claude, Qwen) intelligent.
-          </p>
-          <p>
-            Jeder Kunde profitiert von schnellerer Lösungen, besserer Dokumentation und personalisiertem Support.
-          </p>
-
-          <a href="https://sasa-it.de/wiki/cloud-ai" class="btn-primary" style="margin-top: 16px;">KI-Dienste erfahren →</a>
-        </div>
-
-        <div class="ai-card">
-          <h3>Multi-Model KI Plattform</h3>
-          <ul>
-            <li>NVIDIA NIM — Code & Reasoning</li>
-            <li>GPT/Codex — Allzweck & Dokumentation</li>
-            <li>Claude — Analyse & Verständnis</li>
-            <li>Qwen — Code-Generierung</li>
-            <li>Intelligenter Router — beste Modell-Auswahl</li>
-            <li>Sicher & Datenschutzkonform</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Wiki Teaser -->
-  <section class="wiki-teaser">
-    <div class="container">
-      <div class="section-label" style="color: var(--color-accent);">Wissensbasis</div>
-      <h2 class="section-title" style="color: var(--color-text);">Unser Wiki</h2>
-      <p class="wiki-teaser-text">
-        Professionelle Dokumentation zu allen Themen — Haustechnik, Facility Management, IT-Sicherheit,
-        Cloud & KI. Mit KI-Unterstützung erstellt, von Experten geprüft.
+<!-- Budget Calculator -->
+<section class="section budget-section" id="budget">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label" style="background: rgba(0,163,108,0.1); color: var(--color-dashboard-accent); border: 1px solid rgba(0,163,108,0.2);">Budget</div>
+      <h2 class="section-title">IT-Services kosten schätzen</h2>
+      <p class="section-desc">
+        Wählen Sie Ihre Services und sehen Sie eine grobe Kostenschätzung für Ihr Unternehmen.
       </p>
-      <a href="https://sasa-it.de/wiki" class="wiki-teaser-link">
-        <span>→ Zum Wiki</span>
-        <span style="font-size: 1.2rem;">📚</span>
-      </a>
     </div>
-  </section>
 
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <h4>SASA<span>-IT</span></h4>
-          <p class="footer-desc">
-            Professionelle IT-Dienstleistungen für Unternehmen. Haustechnik, Facility Management, Infrastruktur, Sicherheit, KI.
-          </p>
-          <p class="footer-desc" style="font-size: 0.8125rem; color: rgba(255,255,255,0.4);">
-            Standort: Deutschland · service@sasa-it.de
-          </p>
+    <div style="display: flex; gap: var(--space-lg); flex-wrap: wrap;">
+      <div class="budget-card" style="flex: 1; min-width: 300px;">
+        <div class="section-label" style="margin-bottom: var(--space-lg);">Ihre Auswahl</div>
+
+        <div class="form-group">
+          <label class="form-label">Unternehmensgröße</label>
+          <select id="company-size" class="form-input" onchange="calculateBudget()">
+            <option value="solo">Einzelperson / Solo</option>
+            <option value="small" selected>Kleinunternehmen (1-10)</option>
+            <option value="medium">Mittelunternehmen (11-50)</option>
+            <option value="large">Unternehmen (51-200)</option>
+            <option value="enterprise">Großunternehmen (200+)</option>
+          </select>
         </div>
 
-        <div class="footer-col">
-          <h5>Services</h5>
-          <ul>
-            <li><a href="https://sasa-it.de/wiki/haustechnik">Haustechnik</a></li>
-            <li><a href="https://sasa-it.de/wiki/facility-management">Facility Management</a></li>
-            <li><a href="https://sasa-it.de/wiki/it-infrastruktur">IT-Infrastruktur</a></li>
-            <li><a href="https://sasa-it.de/wiki/sicherheit">Sicherheit & SSL</a></li>
-            <li><a href="https://sasa-it.de/wiki/cloud-ai">Cloud & KI</a></li>
-          </ul>
+        <div class="form-group">
+          <label class="form-label">Gewünschte Services (auswählbar)</label>
+          <div style="display: flex; flex-direction: column; gap: var(--space-sm);">
+            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; font-size: 0.875rem;">
+              <input type="checkbox" class="service-check" data-service="haustechnik" onchange="calculateBudget()">
+              <span>🏠 Haustechnik & Smart Home</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; font-size: 0.875rem;">
+              <input type="checkbox" class="service-check" data-service="facility" onchange="calculateBudget()">
+              <span>🏢 Facility Management</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; font-size: 0.875rem;">
+              <input type="checkbox" class="service-check" data-service="netzwerk" onchange="calculateBudget()">
+              <span>🌐 Netzwerk & Infrastruktur</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; font-size: 0.875rem;">
+              <input type="checkbox" class="service-check" data-service="security" onchange="calculateBudget()">
+              <span>🔒 Sicherheit & SSL</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; font-size: 0.875rem;">
+              <input type="checkbox" class="service-check" data-service="cloud" onchange="calculateBudget()">
+              <span>☁️ Cloud & KI</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: var(--space-sm); cursor: pointer; font-size: 0.875rem;">
+              <input type="checkbox" class="service-check" data-service="support" checked onchange="calculateBudget()">
+              <span>🛠️ 24/7 Support</span>
+            </label>
+          </div>
         </div>
 
-        <div class="footer-col">
-          <h5>Technik</h5>
-          <ul>
-            <li><a href="https://auth.sasa-it.de">Authentik</a></li>
-            <li><a href="https://office.sasa-it.de">Nextcloud</a></li>
-            <li><a href="https://sso.sasa-it.de">NetBird VPN</a></li>
-            <li><a href="https://sasa-it.de/wiki">Wiki</a></li>
-            <li><a href="https://sasa-it.de">Landing</a></li>
-          </ul>
+        <div class="form-group">
+          <label class="form-label">Support-Level</label>
+          <select id="support-level" class="form-input" onchange="calculateBudget()">
+            <option value="basic">Basic (Business Hours)</option>
+            <option value="standard" selected>Standard (8-20 Uhr)</option>
+            <option value="premium">Premium (24/7)</option>
+          </select>
         </div>
 
-        <div class="footer-col">
-          <h5>Support</h5>
-          <ul>
-            <li><a href="https://auth.sasa-it.de">Portal Login</a></li>
-            <li><a href="mailto:support@sasa-it.de">support@sasa-it.de</a></li>
-            <li><a href="https://sasa-it.de/wiki/jupyter-notebooks">Jupyter Notebooks</a></li>
-            <li><a href="https://github.com/sasas-cloud/sasa-it-service">GitHub Repo</a></li>
-          </ul>
+        <button class="btn btn-primary" onclick="calculateBudget()" style="width: 100%; margin-top: var(--space-md);">
+          Berechnen →
+        </button>
+      </div>
+
+      <div class="budget-card" style="flex: 1; min-width: 300px;">
+        <div class="section-label" style="margin-bottom: var(--space-lg);">Ergebnis</div>
+
+        <div id="budget-results">
+          <div class="result-row">
+            <span class="result-row-label">Monatliche Grundgebühr</span>
+            <span class="result-row-value" id="monthly-base">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-row-label">Service-Pakete (6 ausgewählt)</span>
+            <span class="result-row-value" id="services-cost">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-row-label">Support-Zuschlag</span>
+            <span class="result-row-value" id="support-cost">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-row-label">Einrichtungsgebühr (einmalig)</span>
+            <span class="result-row-value" id="setup-cost">—</span>
+          </div>
+          <div class="result-total">
+            <span>Gesamt (monatlich)</span>
+            <span class="value" id="total-monthly">—</span>
+          </div>
+          <div class="result-total" style="margin-top: var(--space-md); border-top: none; padding-top: 0; font-size: 1rem;">
+            <span>Erstsetup (einmalig)</span>
+            <span class="value" id="total-setup" style="font-size: 1rem;">—</span>
+          </div>
+        </div>
+
+        <div class="budget-note" style="margin-top: var(--space-lg);">
+          <strong>⚠ Hinweis:</strong> Dies ist eine grobe Schätzung basierend auf Marktpreisen für IT-Dienstleistungen in Deutschland.
+          Die tatsächlichen Kosten hängen von Ihrem konkreten Umfeld ab. Kontaktieren Sie uns für ein unverbindliches Angebot.
+        </div>
+
+        <div style="margin-top: var(--space-lg);">
+          <!-- CSS Bar Chart -->
+          <div class="chart-container">
+            <div style="display: flex; justify-content: space-between; margin-bottom: var(--space-sm);">
+              <span style="font-size: 0.75rem; color: var(--color-dashboard-muted); text-transform: uppercase; letter-spacing: 0.04em;">Monatliche Kosten pro Bereich</span>
+              <span style="font-size: 0.75rem; color: var(--color-dashboard-muted); font-family: var(--font-mono);">€/Monat</span>
+            </div>
+            <div class="chart-bars" id="budget-chart">
+              <!-- dynamically filled -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Budget Detail Table -->
+<section class="section" id="budget-detail" style="background: var(--color-surface-alt); border-top: 1px solid var(--color-border);">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Detail</div>
+      <h2 class="section-title">Preise im Detail</h2>
+      <p class="section-desc">
+        Durchschnittliche Kosten für IT-Dienstleistungen in Deutschland — Stand 2026.
+      </p>
+    </div>
+
+    <div class="budget-card">
+      <table class="budget-table">
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Stufe</th>
+            <th>Monatlich</th>
+            <th>Jährlich</th>
+            <th>Typischer Anbieter</th>
+          </tr>
+        </thead>
+        <tbody id="budget-table-body">
+          <!-- filled by JS -->
+        </tbody>
+      </table>
+
+      <div class="budget-total">
+        <span>Durchschnittlicher Monats-Mix (KMU)</span>
+        <span style="font-family: var(--font-mono); color: var(--color-accent);" id="avg-monthly">—</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Career / Karriereplan -->
+<section class="section budget-section" id="career">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label" style="background: rgba(191,90,242,0.1); color: #bf5af2; border: 1px solid rgba(191,90,242,0.2);">Karriere</div>
+      <h2 class="section-title">Karriereplan: IT-Dienstleister werden</h2>
+      <p class="section-desc">
+        Von Solo-Selbstständigem zu etabliertem IT-Dienstleistungsunternehmen — ein realistischer Fahrplan.
+      </p>
+    </div>
+
+    <div class="grid grid-2" style="gap: var(--space-lg);">
+      <div class="career-card">
+        <div class="section-label" style="background: rgba(191,90,242,0.1); color: #bf5af2; border: 1px solid rgba(191,90,242,0.2); margin-bottom: 0; align-self: flex-start;">Phase 1</div>
+        <h3><span class="emoji">🌱</span> Foundation (Monat 1-6)</h3>
+        <p>
+          Aufbau der Basics: Netzwerk-Zertifizierungen (CompTIA Network+, Cisco CCNA oder gleich ITIL),
+          Linux-Grundlagen, Grundverständnis von Sicherheit. Gleichzeitig erstes Kundenportfolio aufbauen —
+          oft über Bekannte, lokale Unternehmen, oder als Subunternehmer.
+        </p>
+        <div class="career-level">
+          <span style="font-size: 0.8125rem; color: var(--color-dashboard-muted);">investiere</span>
+          <div class="career-level-bar"><div class="fill" style="width: 25%;"></div></div>
+          <span class="career-level-label">5 Std./Woche</span>
+        </div>
+        <div class="career-skills">
+          <span class="career-skill">Network+</span>
+          <span class="career-skill">Linux 기초</span>
+          <span class="career-skill">First Clients</span>
+          <span class="career-skill">Rechnungswesen</span>
         </div>
       </div>
 
-      <div class="footer-bottom">
-        <div>© 2026 SASA-IT. Alle Rechte vorbehalten.</div>
-        <div class="footer-bottom-links">
-          <a href="https://sasa-it.de/wiki/unternehmen">Unternehmen</a>
-          <a href="https://sasa-it.de/wiki/sicherheit">Datenschutz</a>
-          <a href="https://sasa-it.de/wiki/sicherheit">Impressum</a>
+      <div class="career-card">
+        <div class="section-label" style="background: rgba(191,90,242,0.1); color: #bf5af2; border: 1px solid rgba(191,90,242,0.2); margin-bottom: 0; align-self: flex-start;">Phase 2</div>
+        <h3><span class="emoji">🌿</span> Wachstum (Monat 7-18)</h3>
+        <p>
+          Spezialisierung auf 1-2 Bereiche (z.B. Netzwerk + Sicherheit). Zertifizierungen vertiefen
+          (CCNA/CCNP, ITIL Foundation, vielleicht Security+). Erster Mitarbeiter oder Subunternehmer
+          einstellen. Erste Website und Präsenz aufbauen (sasasa-it.de als Beispiel).
+        </p>
+        <div class="career-level">
+          <span style="font-size: 0.8125rem; color: var(--color-dashboard-muted);">investiere</span>
+          <div class="career-level-bar"><div class="fill" style="width: 50%;"></div></div>
+          <span class="career-level-label">15 Std./Woche</span>
+        </div>
+        <div class="career-skills">
+          <span class="career-skill">CCNA/CCNP</span>
+          <span class="career-skill">ITIL</span>
+          <span class="career-skill">Sicherheit 기초</span>
+          <span class="career-skill">Web Präsenz</span>
+          <span class="career-skill">Team aufbauen</span>
+        </div>
+      </div>
+
+      <div class="career-card">
+        <div class="section-label" style="background: rgba(191,90,242,0.1); color: #bf5af2; border: 1px solid rgba(191,90,242,0.2); margin-bottom: 0; align-self: flex-start;">Phase 3</div>
+        <h3><span class="emoji">🌳</span> Etabliert (Monat 19-36)</h3>
+        <p>
+          Vollzeit-IT-Dienstleister mit 3-10 Mitarbeitern. Mehrere Standorte oder Remote. Spezialisierte
+          Lösungen anbieten (z.B. Nextcloud für KMU, Facility Management Systeme). Zuverlässigkeit und
+          Referenzen bauen. Beginnende Automatisierung von Routineaufgaben.
+        </p>
+        <div class="career-level">
+          <span style="font-size: 0.8125rem; color: var(--color-dashboard-muted);">investiere</span>
+          <div class="career-level-bar"><div class="fill" style="width: 75%;"></div></div>
+          <span class="career-level-label">25 Std./Woche</span>
+        </div>
+        <div class="career-skills">
+          <span class="career-skill">Team Leitung</span>
+          <span class="career-skill">Vertrieb</span>
+          <span class="career-skill">Kundbetreuung</span>
+          <span class="career-skill">Automatisierung</span>
+          <span class="career-skill">Finanzen</span>
+        </div>
+      </div>
+
+      <div class="career-card">
+        <div class="section-label" style="background: rgba(191,90,242,0.1); color: #bf5af2; border: 1px solid rgba(191,90,242,0.2); margin-bottom: 0; align-self: flex-start;">Phase 4</div>
+        <h3><span class="emoji">🏢</span> Professional (Monat 37+)</h3>
+        <p>
+          Etablerter IT-Dienstleister mit 10+ Mitarbeitern, vielleicht auch Standort in mehreren Regionen.
+          Spezialisierte Abteilungen (Netzwerk, Sicherheit, Cloud, Facility). Managerschulungen,
+          Business-Entwicklung, Partnerschaften mit Hardware-Herstellern oder Cloud-Anbietern.
+          Eventuell expansion in neue Märkte.
+        </p>
+        <div class="career-level">
+          <span style="font-size: 0.8125rem; color: var(--color-dashboard-muted);">investiere</span>
+          <div class="career-level-bar"><div class="fill" style="width: 90%;"></div></div>
+          <span class="career-level-label">35+ Std./Woche</span>
+        </div>
+        <div class="career-skills">
+          <span class="career-skill">Business Development</span>
+          <span class="career-skill">Management</span>
+          <span class="career-skill">Partnerschaften</span>
+          <span class="career-skill">Innovation</span>
+          <span class="career-skill">Markenbau</span>
         </div>
       </div>
     </div>
-  </footer>
 
-  <script>
-    // Smooth Scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-      anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-      });
+    <div style="margin-top: var(--space-2xl);">
+      <div class="budget-card" style="background: var(--color-dashboard-card); border-color: var(--color-dashboard-border);">
+        <h3 style="font-size: 1rem; font-weight: 700; color: var(--color-dashboard-text); margin-bottom: var(--space-md); display: flex; align-items: center; gap: var(--space-sm);">
+          <span style="font-size: 1.25rem;">💡</span> Tipps für den Start
+        </h3>
+        <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-md);">
+          <li>
+            <strong style="color: var(--color-dashboard-text);">Fokus auf 1-2 Bereiche:</strong> Spezialisierung bringt mehr Vertrauen als alles-anbieten. Z.B. "Netzwerk & Sicherheit für KMU" statt "alles für alle".
+          </li>
+          <li>
+            <strong style="color: var(--color-dashboard-text);">Lokale Netzwerke nutzen:</strong> IHK, Handelskammer, lokale Unternehmergruppen. Mundpropaganda ist im Service-Business stark.
+          </li>
+          <li>
+            <strong style="color: var(--color-dashboard-text);">Verträge sind wichtig:</strong> Klare Leistungsbeschreibungen, SLA, Haftungsbegrenzung. Ein guter Vertrag schützt beide Seiten.
+          </li>
+          <li>
+            <strong style="color: var(--color-dashboard-text);">KMU sind der beste Markt:</strong> Großunternehmen brauchen Ausschreibungen und langwierige Prozesse. KMU entscheiden schneller und schätzen persönliche Betreuung.
+          </li>
+          <li>
+            <strong style="color: var(--color-dashboard-text);">Automatisierung von Anfang an:</strong> Dokumentation, Monitoring, Rechnungsstellung — je früher, desto mehr Zeit für die Kunden.
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Planning/Dokumentation -->
+<section class="section" id="planning">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Planung</div>
+      <h2 class="section-title">IT-Infrastruktur planen</h2>
+      <p class="section-desc">
+        Ein strukturierter Ansatz für die Planung Ihrer IT-Infrastruktur — von der Analyse bis zur Implementierung.
+      </p>
+    </div>
+
+    <div class="tabs" id="plan-tabs">
+      <button class="tab active" data-tab="plan-analysis">1. Analyse</button>
+      <button class="tab" data-tab="plan-design">2. Design</button>
+      <button class="tab" data-tab="plan-implement">3. Implementierung</button>
+      <button class="tab" data-tab="plan-doc">4. Dokumentation</button>
+    </div>
+
+    <div id="plan-content">
+      <!-- Tab content injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="section" id="contact" style="background: var(--color-surface-alt); border-top: 1px solid var(--color-border);">
+  <div class="container">
+    <div class="flex-between" style="margin-bottom: var(--space-xl);">
+      <div>
+        <div class="section-label">Kontakt</div>
+        <h2 class="section-title" style="text-align: left; margin-bottom: var(--space-md);">Lassen Sie uns sprechen</h2>
+        <p style="color: var(--color-text-muted); font-size: 1.0625rem; max-width: 500px;">
+          Für Fragen, Angebote oder Partnerchaften — wir antworten innerhalb von 24 Stunden.
+        </p>
+      </div>
+      <div style="text-align: right;">
+        <a href="mailto:service@sasa-it.de" class="btn btn-primary btn-lg">Email senden →</a>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-xl); margin-bottom: var(--space-2xl);">
+      <div style="text-align: center;">
+        <div style="font-size: 2rem; margin-bottom: var(--space-md);">📧</div>
+        <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: var(--space-xs);">Email</h3>
+        <a href="mailto:service@sasa-it.de" style="color: var(--color-accent); font-size: 0.9375rem;">service@sasa-it.de</a>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 2rem; margin-bottom: var(--space-md);">📞</div>
+        <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: var(--space-xs);">Telefon</h3>
+        <a href="tel:+493012345678" style="color: var(--color-accent); font-size: 0.9375rem;">+49 30 12345678</a>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 2rem; margin-bottom: var(--space-md);">📍</div>
+        <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: var(--space-xs);">Standort</h3>
+        <p style="color: var(--color-text-muted); font-size: 0.9375rem;">Deutschland<br>auf Anfrage</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h3>SASA<span>-IT</span></h3>
+        <p class="footer-desc">
+          Professionelle IT-Dienstleistungen für Unternehmen. Haustechnik, Facility Management,
+          Infrastruktur, Sicherheit, Cloud & KI — lokal, offen, zuverlässig.
+        </p>
+        <p class="footer-desc" style="margin-top: var(--space-sm);">
+          © 2026 SASA-IT. Alle Rechte vorbehalten.
+        </p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Haustechnik</a></li>
+          <li><a href="#services">Facility Management</a></li>
+          <li><a href="#services">IT-Infrastruktur</a></li>
+          <li><a href="#services">Sicherheit & SSL</a></li>
+          <li><a href="#services">Cloud & KI</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Unternehmen</h4>
+        <ul>
+          <li><a href="#career">Karriere</a></li>
+          <li><a href="#budget">Budget</a></li>
+          <li><a href="#planning">Planung</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Kontakt</h4>
+        <ul>
+          <li><a href="mailto:service@sasa-it.de">service@sasa-it.de</a></li>
+          <li><a href="tel:+493012345678">+49 30 12345678</a></li>
+          <li><a href="https://github.com/sasas-cloud/sasa-it-service">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SASA-IT. Alle Rechte vorbehalten.</span>
+      <span style="display: flex; gap: var(--space-md);">
+        <a href="#">Impressum</a>
+        <a href="#">Datenschutz</a>
+      </span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // === Budget Calculator ===
+  const SERVICE_PRICES = {
+    haustechnik: { basic: 150, small: 350, medium: 700, large: 1200, enterprise: 2000 },
+    facility:    { basic: 200, small: 450, medium: 900, large: 1500, enterprise: 2500 },
+    netzwerk:    { basic: 100, small: 250, medium: 500, large: 1000, enterprise: 1800 },
+    security:    { basic: 80,  small: 200, medium: 400, large: 800,  enterprise: 1500 },
+    cloud:       { basic: 120, small: 300, medium: 600, large: 1100, enterprise: 2000 },
+    support:     { basic: 50,  small: 150, medium: 350, large: 700,  enterprise: 1200 }
+  };
+
+  const SUPPORT_PREMIUM = { basic: 0, standard: 50, premium: 150 };
+
+  const COMPANY_MULTIPLIER = { solo: 0.5, small: 1, medium: 2, large: 4, enterprise: 8 };
+
+  const SETUP_COST = { solo: 500, small: 1500, medium: 3500, large: 7000, enterprise: 15000 };
+
+  function calculateBudget() {
+    const size = document.getElementById('company-size').value;
+    const supportLevel = document.getElementById('support-level').value;
+
+    const selectedServices = [];
+    document.querySelectorAll('.service-check').forEach(cb => {
+      if (cb.checked) selectedServices.push(cb.dataset.service);
     });
-  </script>
+
+    if (selectedServices.length === 0) {
+      document.getElementById('monthly-base').textContent = '€0';
+      document.getElementById('services-cost').textContent = '€0';
+      document.getElementById('support-cost').textContent = '€0';
+      document.getElementById('setup-cost').textContent = '€0';
+      document.getElementById('total-monthly').textContent = '€0';
+      document.getElementById('total-setup').textContent = '€0';
+      return;
+    }
+
+    const multiplier = COMPANY_MULTIPLIER[size];
+    let baseMonthly = 0;
+    selectedServices.forEach(s => {
+      baseMonthly += (SERVICE_PRICES[s][size] || SERVICE_PRICES[s].small) * multiplier;
+    });
+    baseMonthly = Math.round(baseMonthly);
+
+    const supportCost = SUPPORT_PREMIUM[supportLevel] * multiplier;
+    const servicesCost = baseMonthly;
+    const setup = Math.round(SETUP_COST[size] * multiplier);
+
+    const totalMonthly = baseMonthly + supportCost;
+
+    document.getElementById('monthly-base').textContent = `€${baseMonthly}`;
+    document.getElementById('services-cost').textContent = `€${servicesCost}`;
+    document.getElementById('support-cost').textContent = `€${supportCost}`;
+    document.getElementById('setup-cost').textContent = `€${setup}`;
+    document.getElementById('total-monthly').textContent = `€${totalMonthly}`;
+    document.getElementById('total-setup').textContent = `€${setup}`;
+
+    // Update chart
+    updateChart(selectedServices, baseMonthly);
+    updateTable(size);
+  }
+
+  function updateChart(selectedServices, baseMonthly) {
+    const chart = document.getElementById('budget-chart');
+    chart.innerHTML = '';
+    if (selectedServices.length === 0) return;
+
+    const maxVal = Math.max(...selectedServices.map(s => (SERVICE_PRICES[s].small || 100)));
+    selectedServices.forEach(s => {
+      const val = (SERVICE_PRICES[s].small || 100);
+      const pct = Math.max(4, (val / maxVal) * 100);
+      const bar = document.createElement('div');
+      bar.className = 'chart-bar';
+      bar.style.height = pct + '%';
+      bar.innerHTML = `
+        <div class="chart-bar-value">€${val}</div>
+        <div class="chart-bar-label">${s.replace('haustechnik','HT').replace('facility','FM').replace('netzwerk','NW').replace('security','Sec').replace('cloud','Cloud').replace('support','Supp')}</div>
+      `;
+      chart.appendChild(bar);
+    });
+  }
+
+  function updateTable(size) {
+    const body = document.getElementById('budget-table-body');
+    body.innerHTML = '';
+    const entries = [
+      { name: 'Haustechnik', key: 'haustechnik', tag: 'Basis' },
+      { name: 'Facility Management', key: 'facility', tag: 'Basis' },
+      { name: 'Netzwerk & Infrastruktur', key: 'netzwerk', tag: 'Kern' },
+      { name: 'Sicherheit & SSL', key: 'security', tag: 'Kern' },
+      { name: 'Cloud & KI', key: 'cloud', tag: 'Premium' },
+      { name: '24/7 Support', key: 'support', tag: 'Standard' }
+    ];
+    entries.forEach(e => {
+      const monthly = SERVICE_PRICES[e.key][size] || SERVICE_PRICES[e.key].small;
+      const annual = monthly * 12;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="name">${e.name}</td>
+        <td><span class="budget-tag">${e.tag}</span></td>
+        <td class="value"><span class="currency">€</span>${monthly}</td>
+        <td class="value"><span class="currency">€</span>${annual}</td>
+        <td>KMU-üblich</td>
+      `;
+      body.appendChild(tr);
+    });
+    document.getElementById('avg-monthly').textContent = `€${Object.values(SERVICE_PRICES).reduce((a, v) => a + v[size], 0)}`;
+  }
+
+  // Initial calculation
+  document.addEventListener('DOMContentLoaded', () => {
+    calculateBudget();
+  });
+
+  // === Tab switching for Planning ===
+  const PLAN_CONTENT = {
+    'plan-analysis': `
+      <div class="budget-card">
+        <h3>📊 1. Analyse — Wo stehen Sie?</h3>
+        <p style="color: var(--color-text-muted); margin-bottom: var(--space-lg);">
+          Bevor Sie etwas bauen, verstehen Sie Ihr aktuelles Umfeld. Diese Phase ist die wichtigste —
+          viele Projekte scheitern an übersehenen Anforderungen.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
+          <div style="padding: var(--space-md); background: rgba(99,91,255,0.05); border-radius: var(--radius-md); border: 1px solid rgba(99,91,255,0.1);">
+            <strong style="display: block; margin-bottom: var(--space-sm); color: var(--color-accent);">Bestand analysieren</strong>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--color-text-muted);">
+              <li>Inventar aller Devices, Software, Lizenzen</li>
+              <li>Netzwerk-Topologie und -Performance dokumentieren</li>
+              <li>Sicherheitslücken identifizieren (Open Ports, alte Software)</li>
+              <li>Backup-Strategie prüfen und testen</li>
+            </ul>
+          </div>
+          <div style="padding: var(--space-md); background: rgba(0,163,108,0.05); border-radius: var(--radius-md); border: 1px solid rgba(0,163,108,0.15);">
+            <strong style="display: block; margin-bottom: var(--space-sm); color: var(--color-success);">Anforderungen definieren</strong>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--color-text-muted);">
+              <li>Ziel: Was wollen Sie erreichen? (z.B. "Mehr Sicherheit", "schnellere Netzwerke")</li>
+              <li>Budget: Was können Sie investieren? (Einmalig + monatlich)</li>
+              <li>Zeitplan: Wann ist es fertig? (realistisch!)</li>
+              <li>Personen: Wer ist betroffen? (Nutzer, Admins, Management)</li>
+            </ul>
+          </div>
+          <div style="padding: var(--space-md); background: rgba(217,119,6,0.05); border-radius: var(--radius-md); border: 1px solid rgba(217,119,6,0.15);">
+            <strong style="display: block; margin-bottom: var(--space-sm); color: var(--color-warning);">Gaps identifizieren</strong>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--color-text-muted);">
+              <li>Was fehlt im Vergleich zu den Anforderungen?</li>
+              <li>Was ist veraltet und muss ersetzt werden?</li>
+              <li>Wo gibt es Single-Points-of-Failure?</li>
+              <li>Welche Compliance-Anforderungen (DSGVO, Branchenstandard) gelten?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    `,
+    'plan-design': `
+      <div class="budget-card">
+        <h3>🎨 2. Design — Wie sieht es aus?</h3>
+        <p style="color: var(--color-text-muted); margin-bottom: var(--space-lg);">
+          Auf Basis der Analyse planen Sie die Zieldaten. Hier entscheiden Sie sich für Technologien,
+          Architekturen und Prioritäten.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
+          <div style="padding: var(--space-md); background: rgba(99,91,255,0.05); border-radius: var(--radius-md); border: 1px solid rgba(99,91,255,0.1);">
+            <strong style="display: block; margin-bottom: var(--space-sm); color: var(--color-accent);">Architektur-Design</strong>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--color-text-muted);">
+              <li>Netzwerk-Design: VLANs, Subnetze, Firewall-Regeln</li>
+              <li>Server-Infrastruktur: On-Premise, Cloud, Hybrid</li>
+              <li>Sicherheits-Architektur: Authentifizierung, MFA, Zugang</li>
+              <li>Backup & Disaster Recovery: Strategie, RTO, RPO</li>
+            </ul>
+          </div>
+          <div style="padding: var(--space-md); background: rgba(0,163,108,0.05); border-radius: var(--radius-md); border: 1px solid rgba(0,163,108,0.15);">
+            <strong style="display: block; margin-bottom: var(--space-sm); color: var(--color-success);">Technologie-Entscheidungen</strong>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--color-text-muted);">
+              <li>Betriebssysteme: Windows Server, Linux Distribution</li>
+              <li>Dienste: Nextcloud, Authentik, NetBird, Kubernetes?</li>
+              <li>Monitoring: Prometheus, Grafana, ELK?</li>
+              <li>Orchestrierung: Docker, Ansible, Terraform?</li>
+            </ul>
+          </div>
+          <div style="padding: var(--space-md); background: rgba(217,119,6,0.05); border-radius: var(--radius-md); border: 1px solid rgba(217,119,6,0.15);">
+            <strong style="display: block; margin-bottom: var(--space-sm); color: var(--color-warning);">Kosten-Schätzung</strong>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--color-text-muted);">
+              <li>Hardware-Kosten: Server, Switches, APs, Storage</li>
+              <li>Software-Lizenzen: Betriebssystem, Dienste, Support</li>
+              <li>Implementierungszeit: Wie viele Stunden?</li>
+              <li>Laufende Kosten: Wartung, Updates, Support</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    `,
+    'plan-implement': `
+      <div class="budget-card">
+        <h3>🛠️ 3. Implementierung — bauen</h3>
+        <p style="color: var(--color-text-muted); margin-bottom: var(--space-lg);">
+          Schrittweise Umsetzung — nie alles auf einmal. Priorisieren, testen, dokumentieren.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
+          <div style="padding: var(--space-md); background: rgba(99,91,255,0.05); border-radius: var(--radius-md); border: 1px solid rgba(99,91,255,0.1);">
+            <strong style="display: block; margin-bottom: var(--space-sm); color: var(--color-accent);">Phase 1: Grundlage</strong>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--color-text-muted);">
+              <li> physische Infrastruktur: Rack, Switches, Kabel</li>
+              <li>Netzwerk-Konfiguration: VLANs, IP-Adressen, Routing</li>
+              <li>Basis-Sicherheit: Firewall, erste ACLs</li>
+              <li>Backup-System einrichten (noch vor den Daten!)</li>
+            </ul>
+          </div>
+          <div style="padding: var(--space-md); background: rgba(0,163,108,0.05); border-radius: var(--radius-md); border: 1px solid rgba(0,163,108,0.15);">
+            <strong style="display: block; margin-bottom: var(--space-sm); color: var(--color-success);">Phase 2: Dienste</strong>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--color-text-muted);">
+              <li>Authentifizierung: LDAP / AD, Authentik, MFA</li>
+              <li>Datei-Dienste: Nextcloud oder File-Server</li>
+              <li>Collaboration: E-Mail, Chat, Kalender</li>
+              <li>VPN: NetBird oderWireGuard für Remote-Zugang</li>
+            </ul>
+          </div>
+          <div style="padding: var(--space-md); background: rgba(217,119,6,0.05); border-radius: var(--radius-md); border: 1px solid rgba(217,119,6,0.15);">
+            <strong style="display: block; margin-bottom: var(--space-sm); color: var(--color-warning);">Phase 3: Testing & Rollout</strong>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--color-text-muted);">
+              <li>Tests: Funktion, Performance, Sicherheit</li>
+              <li>Benutzer-Akzeptanz-Tests mit ein paar Pilot-Nutzern</li>
+              <li>Dokumentation während des Rollouts aktualisieren</li>
+              <li>Schrittweise Ausrolle — nicht alles auf einmal</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    `,
+    'plan-doc': `
+      <div class="budget-card">
+        <h3>📚 4. Dokumentation — wissen</h3>
+        <p style="color: var(--color-text-muted); margin-bottom: var(--space-lg);">
+          Dokumentation ist kein Extra — sie ist Basis für Wartung, Troubleshooting, und Weiterentwicklung.
+        </p>
+        <div style="display: flex; flex-direction: column; gap: var(--space-lg);">
+          <div style="padding: var(--space-md); background: rgba(99,91,255,0.05); border-radius: var(--radius-md); border: 1px solid rgba(99,91,255,0.1);">
+            <strong style="display: block; margin-bottom: var(--space-sm); color: var(--color-accent);">Was dokumentieren?</strong>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--color-text-muted);">
+              <li>Netzwerk-Diagramm: Topologie, IPs, VLANs, Firewall-Regeln</li>
+              <li>Server-Configs: Betriebssystem, Dienste, Konfigurations-Files</li>
+              <li>Zugangsdaten: (verschlüsselt) — Passwörter, Zertifikate</li>
+              <li>Abläufe: How-To für häufige Aufgaben</li>
+              <li>Disaster Recovery: Was tun bei Ausfall?</li>
+            </ul>
+          </div>
+          <div style="padding: var(--space-md); background: rgba(0,163,108,0.05); border-radius: var(--radius-md); border: 1px solid rgba(0,163,108,0.15);">
+            <strong style="display: block; margin-bottom: var(--space-sm); color: var(--color-success);">Tools</strong>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--color-text-muted);">
+              <li>Wiki: Nextcloud Files + Markdown, oder dediziertes Wiki</li>
+              <li>Diagramme: Excalidraw (wie hier!), Draw.io, Mermaid</li>
+              <li>Config-Management: Ansible Playbooks, Terraform State</li>
+              <li>Monitoring-Darshboards: Grafana für live Status</li>
+            </ul>
+          </div>
+          <div style="padding: var(--space-md); background: rgba(217,119,6,0.05); border-radius: var(--radius-md); border: 1px solid rgba(217,119,6,0.15);">
+            <strong style="display: block; margin-bottom: var(--space-sm); color: var(--color-warning);">Wartung</strong>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-sm); font-size: 0.875rem; color: var(--color-text-muted);">
+              <li>Dokumentation ist lebendig — aktualisieren bei Änderungen</li>
+              <li>Versionierung: Git für Konfigurations-Dateien</li>
+              <li>Regelmäßige Reviews: Ist die Doku noch aktuell?</li>
+              <li>Zugangskontrolle: Wer kann die Doku lesen/bearbeiten?</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    `
+  };
+
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const target = tab.dataset.tab;
+      document.getElementById('plan-content').innerHTML = PLAN_CONTENT[target] || '<div class="budget-card"><p>Inhalt wird geladen...</p></div>';
+    });
+  });
+
+  // Initial planning tab content
+  document.getElementById('plan-content').innerHTML = PLAN_CONTENT['plan-analysis'];
+</script>
+
 </body>
 </html>
