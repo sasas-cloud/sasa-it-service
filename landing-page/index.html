@@ -6,9 +6,65 @@
   <title>SASA-IT — IT-Dienstleistungen, Budget & Karriere</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="tokens.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
   <style>
+    /* === SASA-IT Design Tokens (Stripe/Linear Hybrid) === */
+    :root {
+      /* Stripe-inspired palette: clean, professional, trustworthy */
+      --color-primary: #0a0a0a;
+      --color-surface: #ffffff;
+      --color-surface-alt: #f7f7f7;
+      --color-surface-dark: #1a1a1a;
+      --color-text: #1a1a1a;
+      --color-text-muted: #6b7280;
+      --color-text-inverse: #ffffff;
+      --color-border: #e5e7eb;
+      --color-border-dark: #374151;
+      --color-accent: #635bff;        /* Stripe violet-blue */
+      --color-accent-dark: #4b43d6;
+      --color-success: #059669;
+      --color-warning: #d97706;
+      --color-danger: #dc2626;
+      --color-info: #0284c7;
+
+      /* Linear-inspired: dark surface, green accent for dashboard */
+      --color-dashboard-bg: #0d1117;
+      --color-dashboard-card: #161b22;
+      --color-dashboard-border: #30363d;
+      --color-dashboard-text: #c9d1d9;
+      --color-dashboard-muted: #8b949e;
+      --color-dashboard-accent: #00a36c; /* green */
+
+      /* Typography */
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Source Code Pro', 'JetBrains Mono', monospace;
+
+      /* Radius */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --radius-xl: 24px;
+      --radius-full: 9999px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+      --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
+      --shadow-glow: 0 0 20px rgba(99,91,255,0.3);
+
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+
+      /* Layout */
+      --max-width: 1200px;
+      --nav-height: 72px;
+    }
 
     /* === Reset === */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -45,13 +101,8 @@
     @media (max-width: 900px) {
       .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     }
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-    }
-    @media (max-width: 600px) {
-      .footer-grid { grid-template-columns: 1fr; }
-      .footer-bottom { flex-direction: column; gap: var(--space-sm); text-align: center; }
-    }
+
+    /* === Navigation === */
     .nav {
       position: fixed;
       top: 0;
@@ -267,25 +318,6 @@
     }
     @media (max-width: 600px) {
       .footer-bottom { flex-direction: column; gap: var(--space-sm); text-align: center; }
-      .footer-grid { grid-template-columns: 1fr; }
-      .nav { height: 64px; }
-      .nav-inner { padding: 0 var(--space-md); }
-      .hero-title { font-size: 2.5rem; }
-      .hero-desc { font-size: 1rem; }
-      .hero-actions { flex-direction: column; }
-      .btn-lg { width: 100%; text-align: center; justify-content: center; }
-      .section-title { font-size: 1.75rem; }
-      .budget-card { min-width: 100%; }
-      .form-row { grid-template-columns: 1fr; }
-    }
-    @media (max-width: 480px) {
-      .hero-title { font-size: 2rem; }
-      .section-title { font-size: 1.5rem; }
-      .feature-card { padding: var(--space-lg); }
-      .budget-card { padding: var(--space-lg); }
-      .career-card { padding: var(--space-lg); }
-      .nav-logo { font-size: 1.125rem; }
-      .nav-inner { padding: 0 var(--space-sm); }
     }
 
     /* === Hero === */
@@ -302,16 +334,6 @@
     }
     @media (max-width: 900px) {
       .hero-grid { grid-template-columns: 1fr; }
-      .hero-content { max-width: 100%; }
-    }
-    @media (max-width: 600px) {
-      .hero { padding: calc(64px + var(--space-2xl)) 0 var(--space-2xl); }
-      .hero-title { font-size: 2rem; }
-      .hero-desc { font-size: 1rem; }
-      .hero-actions { flex-direction: column; }
-      .btn-lg { width: 100%; }
-      .hero-stats { gap: var(--space-md); }
-      .hero-stat-value { font-size: 1.5rem; }
     }
     .hero-content { max-width: 560px; }
     .hero-badge {
@@ -737,10 +759,6 @@
     @media (max-width: 600px) {
       .form-row { grid-template-columns: 1fr; }
     }
-    @media (max-width: 480px) {
-      .form-input { padding: 8px 12px; font-size: 0.8125rem; }
-      .form-label { font-size: 0.75rem; }
-    }
 
     /* === Result Panel === */
     .result-panel {
@@ -873,7 +891,7 @@
 <!-- Navigation -->
 <nav class="nav">
   <div class="nav-inner">
-    <a href="#hero" class="nav-logo" style="font-size: 1.15rem;">🔥 Sasa‑IT<br><span style="font-size: 0.65rem; opacity: 0.7; font-weight: 500;">AI Self‑Service Portal</span></a>
+    <a href="#hero" class="nav-logo">SASA<span>-IT</span></a>
     <div class="nav-links">
       <a href="#services" class="nav-link">Services</a>
       <a href="#budget" class="nav-link">Budget</a>
@@ -891,7 +909,7 @@
       <div class="hero-content">
         <div class="hero-badge animate-in">
           <span class="dot"></span>
-          IT-Dienstleistungen · Self Service Portal
+          IT-Dienstleistungen · seit 2024
         </div>
         <h1 class="hero-title animate-in delay-1">
           Dein Partner für<br>
@@ -905,16 +923,6 @@
         <div class="hero-actions animate-in delay-3">
           <a href="#services" class="btn btn-primary btn-lg">Services entdecken →</a>
           <a href="#budget" class="btn btn-secondary btn-lg">Kosten schätzen</a>
-        </div>
-        <div class="hero-actions animate-in delay-3" style="margin-top: var(--space-md);">
-          <a href="https://office.sasa-it.de" class="btn btn-dark btn-lg" target="_blank" rel="noopener">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h4l3 2 3-2h4c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm-2.5 6.5c.828 0 1.5-.672 1.5-1.5S10.328 7 9.5 7 8 7.672 8 8.5s.672 1.5 1.5 1.5zm10.5-1.5c0 .828-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5.672-1.5 1.5-1.5 1.5.672 1.5 1.5zM9.5 14.5c.828 0 1.5-.672 1.5-1.5S10.328 11 9.5 11 8 11.672 8 12.5s.672 1.5 1.5 1.5zm10.5-1.5c0 .828-.672 1.5-1.5 1.5s-1.5-.672-1.5-1.5.672-1.5 1.5-1.5 1.5.672 1.5 1.5zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
-            Office Suite (Login)
-          </a>
-          <a href="https://sso.sasa-it.de" class="btn btn-dark btn-lg" target="_blank" rel="noopener" style="background: var(--color-accent); color: white;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 6px;"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-3h-3v-2h3v-3h2v3h3v2h-3v3z"/></svg>
-            NetBird SSO (Login)
-          </a>
         </div>
         <div class="hero-stats animate-in delay-3">
           <div>
@@ -930,7 +938,6 @@
             <div class="hero-stat-label">Open Source</div>
           </div>
         </div>
-        <!-- INCLUDE:wetter-widget.html -->
       </div>
       <div class="hero-visual animate-in delay-2">
         <div class="visual-title">SASA-IT Dashboard · Live</div>
@@ -960,6 +967,105 @@
           <span class="visual-row-label">Uptime</span>
           <span class="visual-row-value green">99.97%</span>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Gäste-Willkommen: Demo-Banner (von Hermes Agent automatisch eingefügt) -->
+<style>
+  .demo-banner { padding: var(--space-3xl) 0; border-bottom: 1px solid var(--color-border); background: var(--color-surface); }
+  .demo-inner { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3xl); align-items: center; }
+  @media (max-width: 900px) { .demo-inner { grid-template-columns: 1fr; } }
+  .demo-badge { display: inline-flex; align-items: center; gap: var(--space-sm); font-size: 0.75rem; font-weight: 600; color: var(--color-accent-dark); background: rgba(99,91,255,0.08); border: 1px solid rgba(99,91,255,0.2); padding: 6px 14px; border-radius: 9999px; margin-bottom: var(--space-lg); }
+  .demo-badge .dot { width: 8px; height: 8px; background: var(--color-accent); border-radius: 9999px; display: inline-block; }
+  .demo-title { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: var(--space-lg); }
+  .demo-lead { font-size: 1.0625rem; color: var(--color-text-muted); line-height: 1.6; margin-bottom: var(--space-lg); }
+  .demo-lead strong { color: var(--color-text); }
+  .demo-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-md); margin-bottom: var(--space-xl); }
+  @media (max-width: 768px) { .demo-cards { grid-template-columns: 1fr; } }
+  .demo-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 16px; padding: var(--space-xl); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+  .demo-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+  .demo-card-icon { width: 48px; height: 48px; background: rgba(99,91,255,0.08); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: var(--space-md); }
+  .demo-card-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-accent); margin-bottom: var(--space-sm); }
+  .demo-card-list { list-style: none; font-size: 0.875rem; line-height: 1.6; }
+  .demo-card-list li { margin-bottom: var(--space-xs); }
+  .demo-card-list a { color: var(--color-accent); }
+  .demo-foot { font-size: 1rem; color: var(--color-text-muted); background: var(--color-surface-alt); border-radius: 10px; padding: var(--space-lg); border-left: 4px solid var(--color-accent); line-height: 1.6; }
+  .demo-foot em { color: var(--color-text); font-style: normal; font-weight: 600; }
+  .demo-visual { background: var(--color-dashboard-bg); border-radius: 24px; padding: var(--space-xl); border: 1px solid var(--color-dashboard-border); position: relative; overflow: hidden; }
+  .demo-visual::before { content: ''; position: absolute; top: -50%; right: -30%; width: 80%; height: 100%; background: radial-gradient(ellipse, rgba(99,91,255,0.15) 0%, transparent 70%); pointer-events: none; }
+  .demo-vis-title { font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-dashboard-muted); margin-bottom: var(--space-md); position: relative; z-index: 1; }
+  .demo-status { position: relative; z-index: 1; }
+  .demo-status-row { display: flex; justify-content: space-between; align-items: center; padding: var(--space-sm) 0; border-bottom: 1px solid var(--color-dashboard-border); font-size: 0.8125rem; }
+  .demo-status-row:last-child { border-bottom: none; }
+  .demo-dot { width: 8px; height: 8px; border-radius: 9999px; display: inline-block; margin-right: var(--space-sm); flex-shrink: 0; }
+  .demo-dot.live { background: var(--color-success); box-shadow: 0 0 6px var(--color-success); }
+  .demo-status-val { font-weight: 600; color: var(--color-dashboard-text); font-family: var(--font-mono); }
+  .demo-live-pill { display: inline-flex; align-items: center; gap: var(--space-xs); font-size: 0.75rem; font-weight: 600; padding: 4px 12px; border-radius: 9999px; background: rgba(191,90,242,0.1); color: #bf5af2; border: 1px solid rgba(191,90,242,0.2); margin-top: var(--space-lg); position: relative; z-index: 1; }
+  .demo-live-pill .pulse { width: 6px; height: 6px; background: #bf5af2; border-radius: 9999px; display: inline-block; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.3); } }
+</style>
+<section class="demo-banner" id="demo">
+  <div class="container">
+    <div class="demo-inner">
+      <div style="max-width: 560px;">
+        <div class="demo-badge"><span class="dot"></span>Live Demo · Gast-Willkommen</div>
+        <h2 class="demo-title">Hallo — und herzlich willkommen!</h2>
+        <p class="demo-lead"><strong>Ich bin der SASA-IT-Agent</strong>, ein KI-Assistent, der hier automatisch die SASA-IT Service Plattform deployt, wartet und demonstriert. Kurz gesagt: Ich bin der digitale Helfer von SASA-IT.</p>
+        <p class="demo-lead">Was ich heute mache: Ich nehme das GitHub-Repo <code>sasas-cloud/sasa-it-service</code>, bringe die Landing Page live, prüfe die Dienste (Caddy, Authentik, Nextcloud, Wiki.js, NetBird) und zeige euch, wie eine echte IT-Dienstleistungs-Plattform aussieht.</p>
+        <div class="demo-cards">
+          <div class="demo-card">
+            <div class="demo-card-icon">⚙️</div>
+            <div class="demo-card-title">Was ich deploye</div>
+            <ul class="demo-card-list">
+              <li><a href="https://www.sasa-it.de" target="_blank" rel="noopener">Landing Page</a></li>
+              <li><a href="https://auth.sasa-it.de" target="_blank" rel="noopener">Authentik</a></li>
+              <li><a href="https://office.sasa-it.de" target="_blank" rel="noopener">Nextcloud</a></li>
+              <li><a href="https://wiki.sasa-it.de" target="_blank" rel="noopener">Wiki.js</a></li>
+              <li><a href="https://grafana.sasa-it.de" target="_blank" rel="noopener">Grafana</a></li>
+            </ul>
+          </div>
+          <div class="demo-card">
+            <div class="demo-card-icon">🛡️</div>
+            <div class="demo-card-title">Wie ich sichere</div>
+            <ul class="demo-card-list">
+              <li>HTTPS überall (Caddy + LetsEncrypt)</li>
+              <li>Firewall: nur SSH, HTTP, HTTPS, Talk, VPN</li>
+              <li>Zentrale Auth über Authentik (MFA, OIDC)</li>
+              <li>VPN über NetBird für sicheren Zugang</li>
+              <li>Monitoring: Prometheus + Grafana</li>
+            </ul>
+          </div>
+          <div class="demo-card">
+            <div class="demo-card-icon">🤖</div>
+            <div class="demo-card-title">Wer ich bin</div>
+            <ul class="demo-card-list">
+              <li>KI-Agent von <strong>Hermes Agent</strong> (Nous Research)</li>
+              <li>Arbeite für <strong>SASA-IT</strong> (sasas-cloud)</li>
+              <li>Deploy, Wartung, Support, Doku — automatisch</li>
+              <li>Jetzt: Demo für Gäste, Jens &amp; das Team</li>
+            </ul>
+          </div>
+        </div>
+        <div class="demo-foot">
+          <em>Hallo Jens!</em> 👋 — Das ist die Live-Demo. Alle Dienste laufen auf einem Ubuntu-Server.
+          Klickt einfach durch, meldet euch über
+          <a href="https://auth.sasa-it.de" target="_blank" rel="noopener">auth.sasa-it.de</a>
+          oder <a href="mailto:s.kuehtmann@gmail.com">E-Mail</a>. Viel Spaß!
+        </div>
+      </div>
+      <div class="demo-visual">
+        <div class="demo-vis-title">Live-Status heute</div>
+        <div class="demo-status">
+          <div class="demo-status-row"><span class="demo-dot live"></span>Caddy / Proxy<span class="demo-status-val">active</span></div>
+          <div class="demo-status-row"><span class="demo-dot live"></span>Authentik (SSO)<span class="demo-status-val">running</span></div>
+          <div class="demo-status-row"><span class="demo-dot live"></span>Nextcloud AIO<span class="demo-status-val">running</span></div>
+          <div class="demo-status-row"><span class="demo-dot live"></span>Wiki.js<span class="demo-status-val">running</span></div>
+          <div class="demo-status-row"><span class="demo-dot live"></span>NetBird VPN<span class="demo-status-val">ready</span></div>
+          <div class="demo-status-row"><span class="demo-dot live"></span>Grafana Monitoring<span class="demo-status-val">running</span></div>
+        </div>
+        <div class="demo-live-pill"><span class="pulse"></span>Alle Systeme grün</div>
       </div>
     </div>
   </div>
@@ -1219,7 +1325,7 @@
         <p>
           Spezialisierung auf 1-2 Bereiche (z.B. Netzwerk + Sicherheit). Zertifizierungen vertiefen
           (CCNA/CCNP, ITIL Foundation, vielleicht Security+). Erster Mitarbeiter oder Subunternehmer
-          einstellen. Erste Website und Präsenz aufbauen (sasa-it.de als Beispiel).
+          einstellen. Erste Website und Präsenz aufbauen (sasasa-it.de als Beispiel).
         </p>
         <div class="career-level">
           <span style="font-size: 0.8125rem; color: var(--color-dashboard-muted);">investiere</span>
@@ -1308,131 +1414,7 @@
   </div>
 </section>
 
-<!-- Career / Karriereplan -->
-<section class="section budget-section" id="career" style="background: var(--color-surface-alt); border-top: 1px solid var(--color-border);">
-  <div class="container">
-    <div class="section-header">
-      <div class="section-label" style="background: rgba(191,90,242,0.1); color: #bf5af2; border: 1px solid rgba(191,90,242,0.2);">Karriere</div>
-      <h2 class="section-title">Karriereplan: IT-Dienstleister werden</h2>
-      <p class="section-desc">
-        Von Solo-Selbstständigem zu etabliertem IT-Dienstleistungsunternehmen — ein realistischer Fahrplan.
-      </p>
-    </div>
-
-    <div class="grid grid-2" style="gap: var(--space-lg);">
-      <div class="career-card">
-        <div class="section-label" style="background: rgba(191,90,242,0.1); color: #bf5af2; border: 1px solid rgba(191,90,242,0.2); margin-bottom: 0; align-self: flex-start;">Phase 1</div>
-        <h3><span class="emoji">&#x1F331;</span> Foundation (Monat 1-6)</h3>
-        <p>
-          Aufbau der Basics: Netzwerk-Zertifizierungen (CompTIA Network+, Cisco CCNA oder gleich ITIL),
-          Linux-Grundlagen, Grundverständnis von Sicherheit. Gleichzeitig erstes Kundenportfolio aufbauen —
-          oft über Bekannte, lokale Unternehmen, oder als Subunternehmer.
-        </p>
-        <div class="career-level">
-          <span style="font-size: 0.8125rem; color: var(--color-dashboard-muted);">investiere</span>
-          <div class="career-level-bar"><div class="fill" style="width: 25%;"></div></div>
-          <span class="career-level-label">5 Std./Woche</span>
-        </div>
-        <div class="career-skills">
-          <span class="career-skill">Network+</span>
-          <span class="career-skill">Linux basics</span>
-          <span class="career-skill">First Clients</span>
-          <span class="career-skill">Rechnungswesen</span>
-        </div>
-      </div>
-
-      <div class="career-card">
-        <div class="section-label" style="background: rgba(191,90,242,0.1); color: #bf5af2; border: 1px solid rgba(191,90,242,0.2); margin-bottom: 0; align-self: flex-start;">Phase 2</div>
-        <h3><span class="emoji">&#x1F333;</span> Wachstum (Monat 7-18)</h3>
-        <p>
-          Spezialisierung auf 1-2 Bereiche (z.B. Netzwerk + Sicherheit). Zertifizierungen vertiefen
-          (CCNA/CCNP, ITIL Foundation, vielleicht Security+). Erster Mitarbeiter oder Subunternehmer
-          einstellen. Erste Website und Präsenz aufbauen (sasa-it.de als Beispiel).
-        </p>
-        <div class="career-level">
-          <span style="font-size: 0.8125rem; color: var(--color-dashboard-muted);">investiere</span>
-          <div class="career-level-bar"><div class="fill" style="width: 50%;"></div></div>
-          <span class="career-level-label">15 Std./Woche</span>
-        </div>
-        <div class="career-skills">
-          <span class="career-skill">CCNA/CCNP</span>
-          <span class="career-skill">ITIL</span>
-          <span class="career-skill">Security+</span>
-          <span class="career-skill">Web presence</span>
-          <span class="career-skill">Team aufbauen</span>
-        </div>
-      </div>
-
-      <div class="career-card">
-        <div class="section-label" style="background: rgba(191,90,242,0.1); color: #bf5af2; border: 1px solid rgba(191,90,242,0.2); margin-bottom: 0; align-self: flex-start;">Phase 3</div>
-        <h3><span class="emoji">&#x1F332;</span> Etabliert (Monat 19-36)</h3>
-        <p>
-          Vollzeit-IT-Dienstleister mit 3-10 Mitarbeitern. Mehrere Standorte oder Remote. Spezialisierte
-          Lösungen anbieten (z.B. Nextcloud für KMU, Facility Management Systeme). Zuverlässigkeit und
-          Referenzen bauen. Beginnende Automatisierung von Routineaufgaben.
-        </p>
-        <div class="career-level">
-          <span style="font-size: 0.8125rem; color: var(--color-dashboard-muted);">investiere</span>
-          <div class="career-level-bar"><div class="fill" style="width: 75%;"></div></div>
-          <span class="career-level-label">25 Std./Woche</span>
-        </div>
-        <div class="career-skills">
-          <span class="career-skill">Team leiten</span>
-          <span class="career-skill">Vertrieb</span>
-          <span class="career-skill">Kundenbetreuung</span>
-          <span class="career-skill">Automatisierung</span>
-          <span class="career-skill">Finanzen</span>
-        </div>
-      </div>
-
-      <div class="career-card">
-        <div class="section-label" style="background: rgba(191,90,242,0.1); color: #bf5af2; border: 1px solid rgba(191,90,242,0.2); margin-bottom: 0; align-self: flex-start;">Phase 4</div>
-        <h3><span class="emoji">&#x1F3E2;</span> Professional (Monat 37+)</h3>
-        <p>
-          Etablerter IT-Dienstleister mit 10+ Mitarbeitern, vielleicht auch Standort in mehreren Regionen.
-          Spezialisierte Abteilungen (Netzwerk, Sicherheit, Cloud, Facility). Managerschulungen,
-          Business-Entwicklung, Partnerschaften mit Hardware-Herstellern oder Cloud-Anbietern.
-          Eventuell Expansion in neue Märkte.
-        </p>
-        <div class="career-level">
-          <span style="font-size: 0.8125rem; color: var(--color-dashboard-muted);">investiere</span>
-          <div class="career-level-bar"><div class="fill" style="width: 90%;"></div></div>
-          <span class="career-level-label">35+ Std./Woche</span>
-        </div>
-        <div class="career-skills">
-          <span class="career-skill">Business Development</span>
-          <span class="career-skill">Management</span>
-          <span class="career-skill">Partnerschaften</span>
-          <span class="career-skill">Innovation</span>
-          <span class="career-skill">Markenbau</span>
-        </div>
-      </div>
-    </div>
-
-    <div style="margin-top: var(--space-2xl); display: flex; gap: var(--space-lg); flex-wrap: wrap;">
-      <div class="card" style="flex: 1; min-width: 300px;">
-        <div class="section-label" style="margin-bottom: var(--space-lg);">Tipps für den Start</div>
-        <ul style="list-style: none; display: flex; flex-direction: column; gap: var(--space-md);">
-          <li>
-            <strong style="display: block; margin-bottom: var(--space-xs); color: var(--color-text);">Fokus auf 1-2 Bereiche:</strong> Spezialisierung bringt mehr Vertrauen als alles-anbieten. Z.B. "Netzwerk & Sicherheit für KMU" statt "alles für alle".
-          </li>
-          <li>
-            <strong style="display: block; margin-bottom: var(--space-xs); color: var(--color-text);">Lokale Netzwerke nutzen:</strong> IHK, Handelskammer, lokale Unternehmergruppen. Mundpropaganda ist im Service-Business stark.
-          </li>
-          <li>
-            <strong style="display: block; margin-bottom: var(--space-xs); color: var(--color-text);">Verträge sind wichtig:</strong> Klare Leistungsbeschreibungen, SLA, Haftungsbegrenzung. Ein guter Vertrag schützt beide Seiten.
-          </li>
-          <li>
-            <strong style="display: block; margin-bottom: var(--space-xs); color: var(--color-text);">KMU sind der beste Markt:</strong> Großunternehmen brauchen Ausschreibungen und langwierige Prozesse. KMU entscheiden schneller und schätzen persönliche Betreuung.
-          </li>
-          <li>
-            <strong style="display: block; margin-bottom: var(--space-xs); color: var(--color-text);">Automatisierung von Anfang an:</strong> Dokumentation, Monitoring, Rechnungsstellung — je früher, desto mehr Zeit für die Kunden.
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- Planning/Dokumentation -->
 <section class="section" id="planning">
   <div class="container">
     <div class="section-header">
@@ -1456,10 +1438,39 @@
   </div>
 </section>
 
-<!-- Contact (dynamisch eingebunden) -->
+<!-- Contact -->
 <section class="section" id="contact" style="background: var(--color-surface-alt); border-top: 1px solid var(--color-border);">
   <div class="container">
-    <!-- INCLUDE:contact-section.html -->
+    <div class="flex-between" style="margin-bottom: var(--space-xl);">
+      <div>
+        <div class="section-label">Kontakt</div>
+        <h2 class="section-title" style="text-align: left; margin-bottom: var(--space-md);">Lassen Sie uns sprechen</h2>
+        <p style="color: var(--color-text-muted); font-size: 1.0625rem; max-width: 500px;">
+          Für Fragen, Angebote oder Partnerchaften — wir antworten innerhalb von 24 Stunden.
+        </p>
+      </div>
+      <div style="text-align: right;">
+        <a href="mailto:service@sasa-it.de" class="btn btn-primary btn-lg">Email senden →</a>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: var(--space-xl); margin-bottom: var(--space-2xl);">
+      <div style="text-align: center;">
+        <div style="font-size: 2rem; margin-bottom: var(--space-md);">📧</div>
+        <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: var(--space-xs);">Email</h3>
+        <a href="mailto:service@sasa-it.de" style="color: var(--color-accent); font-size: 0.9375rem;">service@sasa-it.de</a>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 2rem; margin-bottom: var(--space-md);">📞</div>
+        <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: var(--space-xs);">Telefon</h3>
+        <a href="tel:+493012345678" style="color: var(--color-accent); font-size: 0.9375rem;">+49 30 12345678</a>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-size: 2rem; margin-bottom: var(--space-md);">📍</div>
+        <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: var(--space-xs);">Standort</h3>
+        <p style="color: var(--color-text-muted); font-size: 0.9375rem;">Deutschland<br>auf Anfrage</p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1468,16 +1479,13 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <h3>🔥 Sasa‑IT<br><span style="font-size: 0.65rem; opacity: 0.7; font-weight: 500;">AI Self‑Service Portal</span></h3>
+        <h3>SASA<span>-IT</span></h3>
         <p class="footer-desc">
           Professionelle IT-Dienstleistungen für Unternehmen. Haustechnik, Facility Management,
           Infrastruktur, Sicherheit, Cloud & KI — lokal, offen, zuverlässig.
-          <span style="display: block; margin-top: 8px; font-size: 0.8125rem; color: rgba(255,255,255,0.5);">
-            Standort: Hannover, Deutschland
-          </span>
         </p>
         <p class="footer-desc" style="margin-top: var(--space-sm);">
-          © 2026 SASA-IT. IT-Dienstleistungen seit 2004. Alle Rechte vorbehalten.
+          <a href="self-service-portal.html" class="footer-cta">Self Service Portal →</a>
         </p>
       </div>
       <div class="footer-col">
@@ -1498,43 +1506,24 @@
           <li><a href="#planning">Planung</a></li>
         </ul>
       </div>
-<div class="footer-col">
+      <div class="footer-col">
         <h4>Kontakt</h4>
         <ul>
           <li><a href="mailto:service@sasa-it.de">service@sasa-it.de</a></li>
-          <li>Hannover, Deutschland</li>
-          <li>
-            <a href="whatsapp://send?phone=493012345678" target="_blank" rel="noopener">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M17.428 14.936c-.296-.16-.656-.16-.952 0l-2.5 1.414A9 9 0 0 1 3.5 10.5a8.5 8.5 0 1 1 13 0c0 6.195-4.28 9.805-10.5 13a9 9 0 0 1-.572-.764z"/></svg>
-              WhatsApp +49 30 12345678
-            </a>
-          </li>
-          <li>
-            <a href="https://wa.me/493012345678" target="_blank" rel="noopener" style="display: block; margin-top: 4px;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 3px;"><path d="M17.428 14.936c-.296-.16-.656-.16-.952 0l-2.5 1.414A9 9 0 0 1 3.5 10.5a8.5 8.5 0 1 1 13 0c0 6.195-4.28 9.805-10.5 13a9 9 0 0 1-.572-.764z"/></svg>
-              wa.me/493012345678
-            </a>
-          </li>
-          <li>
-            <a href="tg://resolve?domain=SasaIT" target="_blank" rel="noopener">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 4px;"><path d="M11.944 17.969c-.015-2.145 1.898-3.419 3.564-3.425 1.673-.006 2.778 1.237 2.763 2.937-.015 1.696-1.125 2.578-2.697 2.576-1.58-.002-2.754-1.088-2.764-2.764.015-1.675 1.125-2.558 2.696-2.564zm3.254-3.425c-.015-2.145 1.898-3.419 3.564-3.425 1.673-.006 2.778 1.237 2.763 2.937-.015 1.696-1.125 2.578-2.697 2.576-1.58-.002-2.754-1.088-2.764-2.764.015-1.675 1.125-2.558 2.696-2.564zm3.254 3.425c-.015-2.145 1.898-3.419 3.564-3.425 1.673-.006 2.778 1.237 2.763 2.937-.015 1.696-1.125 2.578-2.697 2.576-1.58-.002-2.754-1.088-2.764-2.764.015-1.675 1.125-2.558 2.696-2.564z"/></svg>
-              Telegram @SasaIT
-            </a>
-          </li>
-          <li>
-            <a href="https://t.me/SasaIT" target="_blank" rel="noopener" style="display: block; margin-top: 4px;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style="vertical-align: middle; margin-right: 3px;"><path d="M11.944 17.969c-.015-2.145 1.898-3.419 3.564-3.425 1.673-.006 2.778 1.237 2.763 2.937-.015 1.696-1.125 2.578-2.697 2.576-1.58-.002-2.754-1.088-2.764-2.764.015-1.675 1.125-2.558 2.696-2.564zm3.254-3.425c-.015-2.145 1.898-3.419 3.564-3.425 1.673-.006 2.778 1.237 2.763 2.937-.015 1.696-1.125 2.578-2.697 2.576-1.58-.002-2.754-1.088-2.764-2.764.015-1.675 1.125-2.558 2.696-2.564zm3.254 3.425c-.015-2.145 1.898-3.419 3.564-3.425 1.673-.006 2.778 1.237 2.763 2.937-.015 1.696-1.125 2.578-2.697 2.576-1.58-.002-2.754-1.088-2.764-2.764.015-1.675 1.125-2.558 2.696-2.564z"/></svg>
-              t.me/SasaIT
-            </a>
-          </li>
+          <li><a href="tel:+493012345678">+49 30 12345678</a></li>
+          <li><a href="https://github.com/sasas-cloud/sasa-it-service">GitHub</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <span>© 2026 SASA-IT. Alle Rechte vorbehalten.</span>
-      <span style="display: flex; gap: var(--space-md);">
-        <a href="#">Impressum</a>
-        <a href="#">Datenschutz</a>
+      <span style="display: flex; gap: var(--space-md); align-items: center;">
+        <span class="footer-legal-dot" style="width:4px; height:4px; background:rgba(255,255,255,0.4); border-radius:50%;"></span>
+        <a href="impressum.html">Impressum</a>
+        <a href="terms-de.html">AGB</a>
+        <a href="privacy-de.html">Datenschutz</a>
+        <span class="footer-legal-dot" style="width:4px; height:4px; background:rgba(255,255,255,0.4); border-radius:50%;"></span>
+        <a href="terms-hu.html" lang="hu">ÁSZF (HU)</a>
       </span>
     </div>
   </div>
@@ -1652,44 +1641,6 @@
   document.addEventListener('DOMContentLoaded', () => {
     calculateBudget();
   });
-  // === Wetter Widget für Hannover ===
-  async function loadWetter() {
-    try {
-      // Hannover Koordinaten (52.3759° N, 9.7226° E) - ohne Straße!
-      const url = "https://api.open-meteo.com/v1/forecast?latitude=52.3759&longitude=9.7226&current_weather=true&temperature_unit=celsius";
-      const res = await fetch(url);
-      const data = await res.json();
-      if (data.current_weather) {
-        const temp = data.current_weather.temperature;
-        const code = data.current_weather.weathercode;
-        const desc = weatherCodeToText(code);
-        document.getElementById('wetter-temp').textContent = temp.toFixed(1);
-        document.getElementById('wetter-desc').textContent = desc;
-        document.getElementById('wetter-widget').style.display = 'flex';
-      }
-    } catch (e) {
-      console.warn('Wetter laden fehlgeschlagen:', e);
-    }
-  }
-
-  function weatherCodeToText(code) {
-    const map = {
-      0: 'Klarer Himmel', 1: 'Überwiegend klara Luft', 2: 'Teilweise bewölkt',
-      3: 'Overcast', 45: 'Nebel', 48: 'Haarige Nebel', 51: 'Leichte Sprühregen',
-      53: 'Moderater Sprühregen', 55: 'Dichter Sprühregen', 61: 'Leichte Dusch',
-      63: 'Moderate Dusch', 65: 'Starke Dusch', 71: 'Leichter Schneefall',
-      73: 'Moderater Schneefall', 75: 'Starker Schneefall', 80: 'Leichte Schauer',
-      81: 'Moderate Schauer', 82: 'Starker Schauer', 85: 'Schneeschauer',
-      86: 'Starke Schneeschauer', 95: 'Gewitter', 96: 'Gewitter mit Hagel',
-      99: 'Starkes Gewitter mit Hagel'
-    };
-    return map[code] || 'Wetterbedingt';
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    setTimeout(loadWetter, 2000);
-  });
-
 
   // === Tab switching for Planning ===
   const PLAN_CONTENT = {
@@ -1858,8 +1809,6 @@
   // Initial planning tab content
   document.getElementById('plan-content').innerHTML = PLAN_CONTENT['plan-analysis'];
 </script>
-
-
 
 </body>
 </html>
