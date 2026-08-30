@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Confidentialité — SASA-IT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #0a0a0a;
+      --color-surface: #ffffff;
+      --color-surface-alt: #f7f7f7;
+      --color-text: #1a1a1a;
+      --color-text-muted: #6b7280;
+      --color-text-inverse: #ffffff;
+      --color-border: #e5e7eb;
+      --color-accent: #635bff;
+      --color-accent-dark: #4b43d6;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Source Code Pro', 'JetBrains Mono', monospace;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--color-text);
+      background: var(--color-surface);
+    }
+    a { color: var(--color-accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .page-header {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      padding: 40px 0;
+    }
+    .page-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .page-header h1 { font-size: 1.75rem; font-weight: 700; }
+    .breadcrumb { font-size: 0.875rem; color: rgba(255,255,255,0.6); }
+    .breadcrumb a { color: rgba(255,255,255,0.6); }
+    .breadcrumb a:hover { color: white; text-decoration: none; }
+    .content { padding: 40px 0; }
+    .content h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin: 32px 0 12px;
+      color: var(--color-text);
+    }
+    .content h3 {
+      font-size: 1.0625rem;
+      font-weight: 600;
+      margin: 24px 0 8px;
+    }
+    .content p { margin-bottom: 12px; color: var(--color-text); }
+    .content ul { list-style: disc; padding-left: 20px; margin-bottom: 12px; }
+    .content li { margin-bottom: 4px; }
+    .notice {
+      background: #f9fafb;
+      border-left: 3px solid var(--color-accent);
+      padding: 16px;
+      margin: 16px 0;
+      border-radius: var(--radius-sm);
+    }
+    .notice p { margin-bottom: 0; }
+    .footer-legal {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      padding: 24px 0;
+      margin-top: 48px;
+    }
+    .footer-legal .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.875rem;
+    }
+    .footer-legal a { color: rgba(255,255,255,0.7); }
+    .footer-legal a:hover { color: white; text-decoration: none; }
+    @media (max-width: 600px) {
+      .page-header .container { flex-direction: column; align-items: flex-start; }
+      .footer-legal .container { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <div class="container">
+      <div>
+        <h1>Politique de confidentialité</h1>
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">SASA-IT</a> &rsaquo; Confidentialité
+        </nav>
+      </div>
+      <div style="font-size:0.875rem; color:rgba(255,255,255,0.6);">Version 1.0 &middot; Août 2026</div>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="container">
+
+      <p class="notice">
+        En utilisant notre site web et nos services, vous acceptez la présente politique de confidentialité.
+        Pour toute question, vous pouvez nous contacter à tout moment à
+        <a href="mailto:info@sasa-it.de">info@sasa-it.de</a>.
+      </p>
+
+      <h2>1. Responsable du traitement</h2>
+      <p>
+        SASA-IT<br>
+        Représenté par la direction<br>
+        E-mail : <a href="mailto:info@sasa-it.de">info@sasa-it.de</a><br>
+        Téléphone : +49 1522 9245311<br>
+        Adresse : Allemagne, sur demande
+      </p>
+
+      <h2>2. Généralités</h2>
+      <p>
+        La protection de vos données personnelles est une préoccupation centrale pour nous.
+        Nous traitons les données personnelles conformément au Règlement général sur la protection des données
+        (RGPD) et aux dispositions nationales applicables en matière de protection des données.
+        La présente politique de confidentialité décrit les données que nous collectons, à quelles fins
+        et comment nous les protégeons.
+      </p>
+
+      <h2>3. Données que nous collectons</h2>
+
+      <h3>3.1 Données que vous nous transmettez directement</h3>
+      <ul>
+        <li><strong>Données de communication :</strong> Lorsque vous nous contactez par e-mail
+          (<a href="mailto:info@sasa-it.de">info@sasa-it.de</a>) ou par téléphone, nous traitons
+          les informations que vous nous transmettez (nom, adresse e-mail, numéro de téléphone,
+          contenu de la demande) afin de traiter votre demande.</li>
+        <li><strong>Données de contact :</strong> Lorsque vous soumettez une demande via notre site web ou
+          dans le cadre de relations contractuelles, nous collectons les données de contact nécessaires
+          (nom, nom de l'entreprise, adresse, e-mail, numéro de téléphone).</li>
+      </ul>
+
+      <h3>3.2 Données collectées automatiquement</h3>
+      <ul>
+        <li><strong>Journaux de serveur :</strong> Chaque fois que notre site web est consulté, notre serveur
+          enregistre automatiquement des informations qui peuvent être attribuées à la communication sur le site web
+          (adresse IP, date et heure de l'accès, type et version du navigateur, système d'exploitation,
+          URL de provenance, fichiers appelés). Ces données sont conservées pour assurer le fonctionnement stable
+          du site web, pour l'optimisation du site web et pour assurer la sécurité de nos systèmes informatiques.</li>
+        <li><strong>Cookies :</strong> Nous utilisons des cookies sur notre site web. Les cookies sont de petits
+          fichiers texte stockés sur votre appareil. Ils servent à rendre le site web plus convivial pour vous
+          (par exemple, en enregistrant vos préférences). Vous pouvez modifier vos paramètres de cookies
+          à tout moment dans les réglages de votre navigateur.</li>
+      </ul>
+
+      <h3>3.3 Outils d'analyse</h3>
+      <p>
+        Nous n'utilisons aucun service d'analyse externe sur notre site web. Si nous devions à l'avenir utiliser
+        des outils tels que Matomo ou d'autres outils d'analyse respectueux de la vie privée, nous les mentionnerions
+        dans la présente politique de confidentialité et obtiendrions un consentement si cela est requis par la loi.
+      </p>
+
+      <h2>4. Base légale du traitement</h2>
+      <ul>
+        <li><strong>Exécution du contrat et mesures précontractuelles (Art.&nbsp;6(1)(b) RGPD) :</strong>
+          Pour traiter votre demande ou exécuter une relation contractuelle.</li>
+        <li><strong>Intérêts légitimes (Art.&nbsp;6(1)(f) RGPD) :</strong>
+          Pour optimiser notre site web, assurer le fonctionnement sécurisé de nos systèmes d'information
+          et nous défendre contre les attaques.</li>
+        <li><strong>Consentement (Art.&nbsp;6(1)(a) RGPD) :</strong>
+          Lorsque nous obtenons votre consentement explicite (par exemple, pour la newsletter ou certains cookies).</li>
+        <li><strong>Obligations légales :</strong> Lorsque nous sommes tenus de respecter des dispositions légales
+          (par exemple, dispositions relatives au registre du commerce, à la fiscalité ou à la comptabilité).</li>
+      </ul>
+
+      <h2>5. Transmission à des tiers</h2>
+      <p>
+        Nous ne transmettons pas vos données personnelles à des tiers dans le principe. Une transmission n'intervient que si :
+      </p>
+      <ul>
+        <li>une obligation légale existe (par exemple, des ordonnances des autorités),</li>
+        <li>cela est nécessaire pour exécuter des obligations contractuelles avec vous, ou</li>
+        <li>vous avez donné votre consentement explicite.</li>
+      </ul>
+      <p>
+        Lorsque nous faisons appel à des prestataires externes (par exemple, hébergement, envoi d'e-mails),
+        nous nous assurons que le traitement des données est régi par contrat et que les prestataires mettent en œuvre
+        les mesures techniques et organisationnelles requises.
+      </p>
+
+      <h2>6. Durée de conservation</h2>
+      <p>
+        Nous conservons vos données personnelles uniquement aussi longtemps que nécessaire pour l'objectif concerné
+        ou selon les délais de conservation légales. Lorsque l'objectif est atteint ou que le délai de conservation
+        expire, les données sont régulièrement supprimées ou anonymisées, sauf si des obligations de conservation légales
+        s'y opposent.
+      </p>
+
+      <h2>7. Vos droits en tant que personne concernée</h2>
+      <p>Vous disposez des droits suivants à notre encontre :</p>
+      <ul>
+        <li><strong>Droit d'accès (Art.&nbsp;15 RGPD) :</strong> Vous pouvez à tout moment demander des informations
+          sur l'étendue et l'objectif du traitement de vos données.</li>
+        <li><strong>Droit de rectification (Art.&nbsp;16 RGPD) :</strong> Vous pouvez à tout moment faire corriger vos données.</li>
+        <li><strong>Droit à l'effacement (Art.&nbsp;17 RGPD) :</strong> Vous pouvez demander la suppression de vos données,
+          sauf si des obligations légales de conservation s'y opposent.</li>
+        <li><strong>Droit à la limitation du traitement (Art.&nbsp;18 RGPD) :</strong> Dans certaines conditions,
+          vous pouvez demander la limitation du traitement.</li>
+        <li><strong>Droit à la portabilité des données (Art.&nbsp;20 RGPD) :</strong> Vous avez le droit d'obtenir vos données
+          dans un format structuré et lisible par machine, ou de les transmettre à un autre responsable de traitement.</li>
+        <li><strong>Droit de retrait (Art.&nbsp;7(3) RGPD) :</strong> Vous pouvez retirer un consentement à tout moment.</li>
+        <li><strong>Droit de recours (Art.&nbsp;77 RGPD) :</strong> Vous avez le droit de vous plaindre auprès de l'autorité
+          de contrôle compétente en matière de protection des données. L'autorité de contrôle compétente pour nous est l'État fédéral
+          dans lequel se trouve notre siège social. Une liste des autorités de protection des données avec leurs adresses est
+          disponible sur Internet à l'adresse
+          <a href="https://www.bfdi.bund.de/DE/Service/Anschriften_Links/anschriften_links-node.html" target="_blank" rel="noopener">www.bfdi.bund.de</a>.</li>
+      </ul>
+      <p>
+        Pour exercer vos droits, contactez-nous à
+        <a href="mailto:info@sasa-it.de">info@sasa-it.de</a>.
+      </p>
+
+      <h2>8. Sécurité</h2>
+      <p>
+        Nous mettons en place des mesures techniques et organisationnelles pour protéger vos données contre
+        l'accès non autorisé, la perte ou l'utilisation abusive. Ces mesures comprennent notamment des contrôles
+        d'accès, le chiffrement, des vérifications de sécurité régulières et la formation de nos employés.
+      </p>
+
+      <h2>9. Modification de la présente politique de confidentialité</h2>
+      <p>
+        Nous nous réservons le droit de modifier la présente politique de confidentialité afin de l'adapter aux
+        exigences légales actuelles ou à nos services modifiés. La politique de confidentialité actuelle est toujours
+        consultable sur notre site web.
+      </p>
+
+      <h2>10. Contact</h2>
+      <p>
+        Pour toute question concernant la protection des données ou le traitement de vos données, contactez-nous à :
+        <a href="mailto:info@sasa-it.de">info@sasa-it.de</a> ou +49 1522 9245311.
+      </p>
+
+      <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--color-border);">
+        <span style="font-size: 0.875rem; color: var(--color-text-muted); font-weight: 500;">Cette page est également disponible en:</span>
+        <a href="privacy-de.html" style="font-size: 0.875rem; color: var(--color-accent); margin-left: 4px;">Deutsch</a>
+        <a href="privacy-hu.html" style="font-size: 0.875rem; color: var(--color-accent); margin-left: 4px;">Magyar</a>
+        <a href="privacy-en.html" style="font-size: 0.875rem; color: var(--color-accent); margin-left: 4px;">English</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer-legal">
+    <div class="container">
+      <div>&copy; 2026 SASA-IT. Tous droits réservés.</div>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <a href="index.html">Retour à la page d'accueil</a>
+        <a href="impressum.html">Impressum</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

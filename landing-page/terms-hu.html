@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Általános Szerződési Feltételek — SASA-IT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #0a0a0a;
+      --color-surface: #ffffff;
+      --color-surface-alt: #f7f7f7;
+      --color-text: #1a1a1a;
+      --color-text-muted: #6b7280;
+      --color-text-inverse: #ffffff;
+      --color-border: #e5e7eb;
+      --color-accent: #635bff;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Source Code Pro', 'JetBrains Mono', monospace;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --space-sm: 8px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--color-text);
+      background: var(--color-surface);
+    }
+    a { color: var(--color-accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+    .page-header {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      padding: 40px 0;
+    }
+    .page-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .page-header h1 { font-size: 1.75rem; font-weight: 700; }
+    .breadcrumb { font-size: 0.875rem; color: rgba(255,255,255,0.6); }
+    .breadcrumb a { color: rgba(255,255,255,0.6); }
+    .breadcrumb a:hover { color: white; text-decoration: none; }
+    .content { padding: 40px 0; }
+    .content h2 { font-size: 1.25rem; font-weight: 600; margin: 32px 0 12px; }
+    .content h3 { font-size: 1.0625rem; font-weight: 600; margin: 24px 0 8px; }
+    .content p { margin-bottom: 12px; }
+    .content ul { list-style: disc; padding-left: 20px; margin-bottom: 12px; }
+    .content li { margin-bottom: 4px; }
+    .content ol { padding-left: 20px; margin-bottom: 12px; }
+    .content ol li { margin-bottom: 4px; }
+    .notice {
+      background: #f9fafb;
+      border-left: 3px solid var(--color-accent);
+      padding: 16px;
+      margin: 16px 0;
+      border-radius: var(--radius-sm);
+    }
+    .notice p { margin-bottom: 0; }
+    .footer-legal {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      padding: 24px 0;
+      margin-top: 48px;
+    }
+    .footer-legal .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.875rem;
+    }
+    .footer-legal a { color: rgba(255,255,255,0.7); }
+    .footer-legal a:hover { color: white; text-decoration: none; }
+    @media (max-width: 600px) {
+      .page-header .container { flex-direction: column; align-items: flex-start; }
+      .footer-legal .container { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <div class="container">
+      <div>
+        <h1>Általános Szerződési Feltételek</h1>
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">SASA-IT</a> &rsaquo; ÁSZF
+        </nav>
+      </div>
+      <div style="font-size:0.875rem; color:rgba(255,255,255,0.6);">Verzió 1.0 &middot; Augusztus 2026</div>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="container">
+
+      <p class="notice">
+        Szolgáltatásaink igénybevételével elfogadja a következő Általános Szerződési Feltételeket.
+        Kérdés esetén kérjük, lépjen kapcsolatba velünk a
+        <a href="mailto:info@sasa-it.de">info@sasa-it.de</a> e-mail címen.
+      </p>
+
+      <h2>1. Alapfogalmak</h2>
+      <ul>
+        <li><strong>Szolgáltató:</strong> SASA-IT, a vezető irányítási tisztségben képviseli, Németország.</li>
+        <li><strong>Felhasználó / Ügyfél:</strong> A természetes vagy jogi személy, amelyünk szolgáltatásainkat igénybe veszi.</li>
+        <li><strong>Szolgáltatás:</strong> A SASA-IT által nyújtott IT-szolgáltatások (IT-infrastruktúra, Facility Management, biztonság, felhő, AI, támogatás stb.).</li>
+        <li><strong>Megrendelés:</strong> Az Ügyfél és a Szolgáltató által egyeztetett konkrét szolgáltatás.</li>
+      </ul>
+
+      <h2>2. Szolgáltatásfelderítés</h2>
+      <p>
+        A Szolgáltató az Ügyfél kérésére IT-szolgáltatásokat nyújt a megállapodás keretében.
+        A szolgáltatás részletei a kivonatos ajánlatban, a munkaszerződésben vagy egy külön
+        munkaleírásban hivatkozottak.
+      </p>
+      <p>
+        Szolgáltatásaink tartalmazzák különösen:
+      </p>
+      <ul>
+        <li>IT-infrastruktúra: hálózat, szerver, felhő, hosting, monitoring</li>
+        <li>Facility Management: épületmenedzsment, karbantartás, energia-menedzsment</li>
+        <li>Biztonság & SSL: tanúsítványok, tűzfalak, VPN, hozzáférési védelem</li>
+        <li>Felhő & AI: AI-modellek, felhő-architektúra, munkafolyamatok</li>
+        <li>24/7 támogatás: karbantartás, monitorozás, vészhelyzet-szolgáltatás</li>
+        <li>Egyéb megállapodott szolgáltatások</li>
+      </ul>
+
+      <h2>3. Szerződéskötés & Megrendelés leadása</h2>
+      <p>
+        Megrendelések írásban (e-mailben, megrendelési űrlapon vagy szerződésen keresztül)
+        vagy szóban a kontakt űrlapon keresztül leadhatók. A megrendelés akkor szüli a szerződést,
+        amikor a Szolgáltató tudomást szerez róla. A Szolgáltató megerősíti a megrendelést,
+        és közli az Ügyféllel az időtervet, költségbecslést vagy árazási tervet.
+      </p>
+
+      <h2>4. Árazás & Fizetési feltételek</h2>
+      <ul>
+        <li>Az árazás euróban (€) értendő, a hozzáadott áfa (ÁFA) felhasználásával.</li>
+        <li>Egyszeri szolgáltatások esetén a fizetés általában a munkavégzés felében előre, a
+          maradék felében a munkavégzés befejeztével történik.</li>
+        <li>Folyamatos szolgáltatások (havi előfizetés, támogatás) esetén a számlázás havi
+          előre történik; a fizetés 14 napon belül a számla kibocsátását követően történik.</li>
+        <li>Késedelem esetében az Ügyfél a tőke és a késedelmes kamat arányával fizet a
+          Szolgáltatónak.</li>
+        <li>A szállítási és átadási időpontok közösen egyeztetettek.</li>
+      </ul>
+
+      <h2>5. Szolgáltatás végrehajtás & Felelősségi körök</h2>
+      <p>
+        A Szolgáltató a megállapodott szolgáltatásokat a megbízható gondossággal végzi.
+        A felelősségi körök (ki mit csinál) a megrendelésben vagy a projekttervben határozódnak meg.
+        A változtatások íratlan egyeztetéshez kötöttek.
+      </p>
+
+      <h2>6. Elfogadás</h2>
+      <p>
+        Az Ügyfélnek kell időt adnia a Szolgáltatónak a szolgáltatás átvételére.
+        A szerződésben előírt feltételeknek megfelelő szolgáltatások elfogadásra kerülnek.
+        A Szolgáltató azonnali tájékoztatást ad az Ügyfélnek a hiányosságok esetén,
+        és felhalmozza a szolgáltatást, amíg a hiányosságok kijavításra kerülnek.
+      </p>
+
+      <h2>7. Garanciális ügyintézés & Feltétlen garancia</h2>
+      <p>
+        Szolgáltatók a hibák esetén a törvényi szabadságot (§§ 434 ff. BGB) biztosítják.
+        A garanciális ügyintézés kizárása törvényszerűen nem megengedhető. A garanciális
+        garancia csak kifejezett írásos egyeztetés mellett érvényes.
+      </p>
+
+      <h2>8. Felelősségi kizárás</h2>
+      <p>
+        Szolgáltatók azügyben, hogy a szolgálatidőszakban a Szolgáltató hibája
+        miatt okozott károkat viselje, azonban csak a szerződésben egyeztetett
+        ellenérték mértékében (§&nbsp;270 BGB).
+      </p>
+      <ul>
+        <li>A szolgáltatások általános használatából származó károkat,
+          amelyet az Ügyfél vagy harmadik fél okoz, a Szolgáltató nem terheli.</li>
+        <li>A Szolgáltatónak nincs felelőssége a szolgáltatások általános használata
+          során okozott károkért, hiszen a Szolgáltató felelősségének korlátjai
+          a szerződésben előírtak.</li>
+        <li>Az Ügyfél a saját rendszereineket, és a törvényi előírásoknak megfelelően
+          használják, és a felelősség terhe az Ügyfélre hárul.</li>
+      </ul>
+
+      <h2>9. Adatvédelem</h2>
+      <p>
+        Szolgáltatásaink igénybevételekor a személyes adatok kezelése a
+        <a href="privacy-hu.html">Adatvédelmi Irányelvünkben</a>
+        foglaltak szerint történik. A szerződésekhez kapcsolódó adatmegjegyzések
+        esetén a Szolgáltató és az Ügyfél közötti adatkezelési szerződés
+        (AVS) szüneteltethető a § 28 DSGVO szerint.
+      </p>
+
+      <h2>10. Felmondás & Szerződés időtartama</h2>
+      <ul>
+        <li>Folyamatos szerződések esetén (pl. támogatási előfizetések) a felmondási idő
+          egy hó a szerződés időszakának végén.</li>
+        <li>A felmondás írásban (e-mailben a <a href="mailto:info@sasa-it.de">info@sasa-it.de</a> címre) történjen.</li>
+        <li>A szerződés egyeztetett hosszabbítása vagy módosítása lehetséges.</li>
+        <li>Súlyos szerződés megszegés esetén a Szolgáltató az Ügyfél figyelmeztetését
+          követően a szerződést azonnal felbonthatja.</li>
+      </ul>
+
+      <h2>11. Frissített szöveg & Módosítás</h2>
+      <p>
+        Ezek a Általános Szerződési Feltételek a Szolgáltató által a törvényszerű
+        előírások fenntartása mellett módosíthatók. A módosításokat a Szolgáltató
+        az Ügyféllel legalább 4 héttel a hatálybalépés előtt jelzi (e-mailben vagy
+        a weboldalon). Az Ügyfél szóba jöhet a módosítás ellen tiltakozni,
+        és azonnal felmondhatja a szerződést.
+      </p>
+
+      <h2>12. Megőrzési klauzula</h2>
+      <p>
+        Ha a jelen ÁSZF egy vagy több pontja hatálytalan vagy hatálytalanul válik,
+        a többi pont hatályát nem érinti. Hatálytalan pontok helyett hatályos
+        rendelkezések lépnek a helyére, amelyek a hatálytalan rendelkezés
+        gazdasági célját서비스는대픟진다.
+      </p>
+
+      <h2>13. Bírósági illetékesség & Alkalmazandó jog</h2>
+      <ul>
+        <li>E szerződésből vagy azzal összefüggésben keletkező minden vita esetében
+          kizárólag a Német Szövetségi Köztársaság jogszabályai állnak fenn,
+          az internationale magánjog kizárásával.</li>
+        <li>Minden szerződéses vita esetében — ha az Ügyfél kereskedő vagy közjogi
+          jogi személy vagy közjogi különálló szerv — kizárólag a Szolgáltató
+          székhelye (Németország) illetékes bíróság.</li>
+        <li>Ha az Ügyfél a fogyasztó (nem jogi személy), akkor az Ügyfél a
+          szokásos illetékességi bíróságra is előfordulhat.</li>
+        <li>Kifejezetten megállapítjuk, hogy az Ügyfél, ha kereskedő,
+          szintén a Szolgáltató börtönébe irányítható.</li>
+      </ul>
+
+    </div>
+  </main>
+
+  <footer class="footer-legal">
+    <div class="container">
+      <div>&copy; 2026 SASA-IT. Minden jog fenntartva.</div>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <a href="index.html">Vissza a kezdőlapra</a>
+        <a href="impressum.html">Impressum</a>
+        <a href="privacy-hu.html">Adatvédelem</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adatvédelmi Irányelv — SASA-IT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #0a0a0a;
+      --color-surface: #ffffff;
+      --color-text: #1a1a1a;
+      --color-text-muted: #6b7280;
+      --color-text-inverse: #ffffff;
+      --color-accent: #635bff;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Source Code Pro', 'JetBrains Mono', monospace;
+      --radius-sm: 6px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.65;
+      color: var(--color-text);
+      background: var(--color-surface);
+    }
+    a { color: var(--color-accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 800px; margin: 0 auto; padding: 0 24px; }
+    .page-header {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      padding: 40px 0;
+    }
+    .page-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .page-header h1 { font-size: 1.75rem; font-weight: 700; }
+    .breadcrumb { font-size: 0.875rem; color: rgba(255,255,255,0.6); }
+    .breadcrumb a { color: rgba(255,255,255,0.6); }
+    .breadcrumb a:hover { color: white; text-decoration: none; }
+    .content { padding: 40px 0; }
+    .content h2 { font-size: 1.25rem; font-weight: 600; margin: 32px 0 12px; }
+    .content h3 { font-size: 1.0625rem; font-weight: 600; margin: 24px 0 8px; }
+    .content p { margin-bottom: 12px; }
+    .content ul { list-style: disc; padding-left: 20px; margin-bottom: 12px; }
+    .content li { margin-bottom: 4px; }
+    .notice {
+      background: #f9fafb;
+      border-left: 3px solid var(--color-accent);
+      padding: 16px;
+      margin: 16px 0;
+      border-radius: var(--radius-sm);
+    }
+    .notice p { margin-bottom: 0; }
+    .footer-legal {
+      background: var(--color-primary);
+      color: var(--color-text-inverse);
+      padding: 24px 0;
+    }
+    .footer-legal .container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.875rem;
+    }
+    .footer-legal a { color: rgba(255,255,255,0.7); }
+    .footer-legal a:hover { color: white; text-decoration: none; }
+    @media (max-width: 600px) {
+      .page-header .container { flex-direction: column; align-items: flex-start; }
+      .footer-legal .container { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <div class="container">
+      <div>
+        <h1>Adatvédelmi Irányelv</h1>
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="index.html">SASA-IT</a> &rsaquo; Adatvédelem
+        </nav>
+      </div>
+      <div style="font-size:0.875rem; color:rgba(255,255,255,0.6);">Verzió 1.0 &middot; Augusztus 2026</div>
+    </div>
+  </header>
+
+  <main class="content">
+    <div class="container">
+
+      <p class="notice">
+        A weboldalunk és szolgáltatásokunk használatával elfogadja a következő adatvédelmi irányelvet.
+        Ha bármilyen kérdése van, szívesen válaszolunk neked a
+        <a href="mailto:info@sasa-it.de">info@sasa-it.de</a> e-mail címen.
+      </p>
+
+      <h2>1. Adatbizalmi Személy</h2>
+      <p>
+        SASA-IT<br>
+        A vezető irányítási tisztségben<br>
+        E-mail: <a href="mailto:info@sasa-it.de">info@sasa-it.de</a><br>
+        Telefon: +49 1522 9245311<br>
+        Cím: Németország, igény szerint
+      </p>
+
+      <h2>2. Általános</h2>
+      <p>
+        A személyes adatok védelme központi kérdés számunkra.
+        A személyes adatokat a Általános Adatvédelmi Rendelet (ADATTŐRVÉDELMI RENDSZABÁLY — GDPR) és
+        az alkalmazható nemzeti adatvédelmi előírások szerint dolgozzuk fel.
+        Ez az adatvédelmi irányelv leírja, hogy mely adatokat gyűjtjük, milyen célra, és hogyan védjük őket.
+      </p>
+
+      <h2>3. Azt Adatok Gyűjtése</h2>
+
+      <h3>3.1 Közvetlenül Beszolgáltatott Adatok</h3>
+      <ul>
+        <li><strong>Kommunikációs adatok:</strong> Amikor velünk e-mailben
+          (<a href="mailto:info@sasa-it.de">info@sasa-it.de</a>) vagy telefonon lépünk kapcsolatba,
+          a tőled származó adatokat (név, e-mail cím, telefonhívás, kérelem tartalma) dolgozzuk fel a
+          kérelmed kezelése érdekében.</li>
+        <li><strong>Kapcsolati adatok:</strong> Amikor weboldalunkon keresztül beadott kérelem vagy szerződéses
+          kapcsolatok keretében szükséges kapcsolati adatokat gyűjtünk (név, cégnév, cím, e-mail, telefon).</li>
+      </ul>
+
+      <h3>3.2 Automatikusan Gyűjtött Adatok</h3>
+      <ul>
+        <li><strong>Szerver-naplófájlok:</strong> Weboldalunk minden egyes látogatásakor szerverünk automatikusan
+          rögzít olyan információkat, amelyek a weboldal-kommunikációnak tulajdoníthatók (IP-cím, látogatás dátuma és
+          ideje, böngésző típusa és verziója, operációs rendszer, forrás URL, kért fájlok). Ezeket az adatokat a
+          weboldal stabil üzemeltetéséhez, a weboldal optimalizálásához, valamint az ITrendszerek biztonságának
+          megőrzéséhez tároljuk.</li>
+        <li><strong>Sütik (Cookies):</strong> Sütiket használunk weboldalunkon. A sütik kicsi szövegfájlok,
+          amelyek a készülékeden tárolódnak. Arra szolgálják, hogy a weboldalt felhasználóbarátabbá tegyük
+          (pl. beállítások mentése). A sütik beállításait bármikor módosíthatod a böngésző beállításaiban.</li>
+      </ul>
+
+      <h3>3.3 Elemző Eszközök</h3>
+      <p>
+        Nem használunk külső elemző szolgáltatásokat weboldalunkon. Ha a jövőben Matomot vagy hasonló
+        adatvédelmi szempontból megfelelő eszközöket használnánk, ezek a jelen irányelvben lennének feltüntetve,
+        tüntetve, és ahol a jogszabály szükséges, hozzájárulást kérnénk.
+      </p>
+
+      <h2>4. Az Adatfeldolgozás Jogalapja</h2>
+      <ul>
+        <li><strong>Szerződés Teljesítése és Szerződéskötés Előtti Műveletek (Art.&nbsp;6(1)(b) GDPR):</strong>
+          Kérésem kezelése vagy meglévő szerződéses kapcsolat teljesítése érdekében.</li>
+        <li><strong>Jogosult Érdekeltség (Art.&nbsp;6(1)(f) GDPR):</strong>
+          Weboldalunk optimalizálása, ITrendszereink biztonságos üzemeltetésének biztosítása,
+          és támadások elleni védekezés érdekében.</li>
+        <li><strong>Hozzájárulás (Art.&nbsp;6(1)(a) GDPR):</strong>
+          Amikor kifejezett hozzájárulást kapunk (pl. hírlevél vagy bizonyos sütik esetén).</li>
+        <li><strong>Jogi Kötelezettségek:</strong> Amikor jogszabályi előírásoknak kell megfelelni
+          (pl. kereskedelmi bejegyzés, adózás, vagy számviteli követelmények).</li>
+      </ul>
+
+      <h2>5. Adatátadás Harmadik Feleknek</h2>
+      <p>
+        Általában nem adjuk át személyes adatait kettedégi félnek. Az átadás csak akkor történik ha:
+      </p>
+      <ul>
+        <li>jogi kötelezettség áll fenn (pl. hivatali utasítások),</li>
+        <li>ez szükséges a veled szembeni szerződéses kötelezettségek teljesítéséhez, vagy</li>
+        <li>kitételes hozzájárulás megvan.</li>
+      </ul>
+      <p>
+        Külső szolgáltatók bevonásakor (pl. tárhely, e-mail továbbítás) biztosítjuk, hogy az adatfeldogozás
+        szerződésben rendeződjön, és a szolgáltatók megvalósítsák a szükséges technikai és szerves intézkedéseket.
+      </p>
+
+      <h2>6. Tárolási Időtartam</h2>
+      <p>
+        Személyes adataitokat csak addig tároljuk, amíg a célhoz szükséges, vagy amíg a jogi megőrzési
+        időszakok előírják. Amint a cél eléri vagy a tárolási idő lejár, az adatokat rendszeresen töröljük
+        vagy anonimizáljuk, hacsak jogi megőrzési kötelezettségek nem ütköznek ebbe.
+      </p>
+
+      <h2>7. Jogai Ötletek Észlelt Adatvédelmi Személyként</h2>
+      <p>A következő jogok illetnek meg veled:</p>
+      <ul>
+        <li><strong>Hozzáférési Jog (Art.&nbsp;15 GDPR):</strong> Bármikor kérhetsz információkat az adataid
+          feldogozásának mértékéről és céljáról.</li>
+        <li><strong>Javítási Jog (Art.&nbsp;16 GDPR):</strong> Bármikor kérheted az adataid javítását.</li>
+        <li><strong>Törlési Jog (Art.&nbsp;17 GDPR):</strong> Kérheted az adataid törlését,
+          hacsak jogi megőrzési kötelezettségek nem ütköznek ebbe.</li>
+        <li><strong>Feldogozás Megszűntetés Jog (Art.&nbsp;18 GDPR):</strong> Bizonyos feltételek mellett
+          kérheted a feldogozás korlátozását.</li>
+        <li><strong>Adatmozgatási Jog (Art.&nbsp;20 GDPR):</strong> Jogod van arra, hogy adataidat
+          strukturált, géppel olvasható formátumban kérjed, vagy továbbítsák egy másik irányító szervnek.</li>
+        <li><strong>Hozzájárulás Visszavonás (Art.&nbsp;7(3) GDPR):</strong> A hozzájárulást bármikor visszavonhatod.</li>
+        <li><strong>Panasz Jog (Art.&nbsp;77 GDPR):</strong> Jogod van panaszt tenni az illetékes felügyeleti hatóságnál
+          az adatvédelem terén. A veled szemben illetékes felügyeleti hatóság a QUALIFY — szövetségi állam, ahol
+          központi irodánk van. A felügyeleti hatóságok listája elérhető a következő címen:
+          <a href="https://www.bfdi.bund.de/DE/Service/Anschriften_Links/anschriften_links-node.html" target="_blank" rel="noopener">www.bfdi.bund.de</a>.</li>
+      </ul>
+      <p>
+        A jogaid érvényesítéséhez kérlek, lépj velünk kapcsolatba a
+        <a href="mailto:info@sasa-it.de">info@sasa-it.de</a> című lazon.
+      </p>
+
+      <h2>8. Biztonság</h2>
+      <p>
+        Megvalósítunk technikai és szerves intézkedéseket a személyes adataid védje unauthorized hozzáférés,
+        veszteség vagy visszaásság ellen. Ezek közé tartozik többek között hozzáférési szűrések, titkosítás,
+        rendszeres biztonsági ellenőrzések és alkalmazottainknak képzés.
+      </p>
+
+      <h2>9. Jelen Adatvédelmi Irányelv Módosítása</h2>
+      <p>
+        Fenntartjuk a jelen dokumentum módosítását jogunk, hogy alkalmazkodjuk a jelenlegi jogszabályi követelményekhez
+        összeváltunk szolgáltatásainkhoz. Az aktuális adatvédelmi irányelv mindig elérhető weboldalunkon.
+      </p>
+
+      <h2>10. Kapcsolat</h2>
+      <p>
+        Az adatvédelemmel vagy az adataid feldolgozásával kapcsolatban kérlek, lépj velünk kapcsolatba:
+        <a href="mailto:info@sasa-it.de">info@sasa-it.de</a> vagy +49 1522 9245311.
+      </p>
+
+      <div style="margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--color-border);">
+        <span style="font-size: 0.875rem; color: var(--color-text-muted); font-weight: 500;">Ez az oldal erreítható ezeken a nyelveken is:</span>
+        <a href="privacy-de.html" style="font-size: 0.875rem; color: var(--color-accent); margin-left: 4px;">Deutsch</a>
+        <a href="privacy-fr.html" style="font-size: 0.875rem; color: var(--color-accent); margin-left: 4px;">Français</a>
+        <a href="privacy-en.html" style="font-size: 0.875rem; color: var(--color-accent); margin-left: 4px;">English</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer-legal">
+    <div class="container">
+      <div>&copy; 2026 SASA-IT. Minden jog fenntartva.</div>
+      <div style="display:flex; gap:16px; flex-wrap:wrap;">
+        <a href="index.html">Vissza a kezdőlapra</a>
+        <a href="impressum.html">Impressum</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
