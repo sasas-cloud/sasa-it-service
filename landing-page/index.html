@@ -921,8 +921,9 @@
           Netzwerke, Cloud, Security. Lokal, persönlich, offen.
         </p>
         <div class="hero-actions animate-in delay-3">
-          <a href="#services" class="btn btn-primary btn-lg">Services entdecken →</a>
-          <a href="#budget" class="btn btn-secondary btn-lg">Kosten schätzen</a>
+          <a href="https://office.sasa-it.de" class="btn btn-primary btn-lg" target="_blank" rel="noopener">☁️ Cloud Office</a>
+          <a href="https://auth.sasa-it.de" class="btn btn-secondary btn-lg" target="_blank" rel="noopener">说了 Authentik Portal</a>
+          <button class="btn btn-primary btn-lg" onclick="openDemoFlow()" style="background: var(--color-success);">🤖 Demo starten</button>
         </div>
         <div class="hero-stats animate-in delay-3">
           <div>
@@ -964,13 +965,74 @@
           <span class="visual-row-value green">84 Modelle</span>
         </div>
         <div class="visual-row" style="border-bottom: none; padding-bottom: 0;">
-          <span class="visual-row-label">Uptime</span>
-          <span class="visual-row-value green">99.97%</span>
+          <span class="visual-row-label">Beszel</span>
+          <span class="visual-row-value green">Port 18090 · live</span>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- Nova Demo Flow Modal -->
+<div id="demo-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:2000; align-items:center; justify-content:center;" onclick="if(event.target===this)closeDemoFlow()">
+  <div id="demo-modal" style="background:var(--color-surface); border-radius:var(--radius-xl); max-width:640px; width:90%; max-height:90vh; overflow:auto; box-shadow:0 0 60px rgba(0,0,0,0.3); position:relative; animation:fadeInUp 0.3s ease;">
+    <button onclick="closeDemoFlow()" style="position:absolute; top:12px; right:12px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--color-text-muted); line-height:1;">&times;</button>
+    <div id="demo-step-1" style="padding: var(--space-3xl);">
+      <div style="text-align:center; margin-bottom: var(--space-xl);">
+        <div style="font-size:3rem; margin-bottom: var(--space-md);">🤖</div>
+        <h2 style="font-size:1.75rem; font-weight:800; margin-bottom:var(--space-sm); color:var(--color-text);">Live Demo · Nova</h2>
+        <p style="color:var(--color-text-muted);">Ich bin Nova, ein KI-Assistent, der hier automatisch die SASA-IT Service Plattform betreut, wartet und demonstriert. Kurz gesagt: Ich bin der digitale Helfer von Sascha.</p>
+      </div>
+      <div style="text-align:center;">
+        <div class="form-group" style="max-width:360px; margin:0 auto;">
+          <label class="form-label" style="text-align:left;">Wie heißt du? (optional)</label>
+          <input id="demo-name-input" class="form-input" placeholder="z.B. Jens" autofocus>
+        </div>
+        <button class="btn btn-primary btn-lg" onclick="startDemoFlow()" style="margin-top:var(--space-md);">Loslegen →</button>
+        <p style="margin-top:var(--space-md); font-size:0.8125rem; color:var(--color-text-muted);">Oder klicke einfach weiter — ich begrüße dich trotzdem persönlich.</p>
+      </div>
+    </div>
+    <div id="demo-step-2" style="display:none; padding: var(--space-3xl);">
+      <div style="text-align:center; margin-bottom: var(--space-xl);">
+        <h2 style="font-size:1.5rem; font-weight:700; margin-bottom:var(--space-md);">Was ich Betreue</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-md);">
+          <div style="background:var(--color-surface-alt); border-radius:var(--radius-lg); padding:var(--space-lg); text-align:left;">
+            <div style="font-size:1.5rem; margin-bottom:var(--space-sm);">☁️</div>
+            <div style="font-weight:700; margin-bottom:var(--space-xs);">Nextcloud & Wiki</div>
+            <div style="font-size:0.8125rem; color:var(--color-text-muted);">Dateien, Kalender, Dokumente — anfragen, pim und ich kümmere mich drum.</div>
+          </div>
+          <div style="background:var(--color-surface-alt); border-radius:var(--radius-lg); padding:var(--space-lg); text-align:left;">
+            <div style="font-size:1.5rem; margin-bottom:var(--space-sm);">📅</div>
+            <div style="font-weight:700; margin-bottom:var(--space-xs);">Termine & Telefon</div>
+            <div style="font-size:0.8125rem; color:var(--color-text-muted);">Ich plane Termine, setze Erinnerungen und sitze am Telefon, wenn du Hilfe brauchst.</div>
+          </div>
+          <div style="background:var(--color-surface-alt); border-radius:var(--radius-lg); padding:var(--space-lg); text-align:left;">
+            <div style="font-size:1.5rem; margin-bottom:var(--space-sm);">📝</div>
+            <div style="font-weight:700; margin-bottom:var(--space-xs);">Anfragen & Support</div>
+            <div style="font-size:0.8125rem; color:var(--color-text-muted);">Du hast eine Frage? Ich antworte — zu IT, Neuersachen, oder einfach nur Quatschen.</div>
+          </div>
+          <div style="background:var(--color-surface-alt); border-radius:var(--radius-lg); padding:var(--space-lg); text-align:left;">
+            <div style="font-size:1.5rem; margin-bottom:var(--space-sm);">🛡️</div>
+            <div style="font-weight:700; margin-bottom:var(--space-xs);">Sicherheit & Monitoring</div>
+            <div style="font-size:0.8125rem; color:var(--color-text-muted);">Zentrale Auth (MFA, OIDC), VPN, Prometheus + Grafana — ich überwache alles.</div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:var(--space-xl);">
+        <p style="color:var(--color-text-muted); margin-bottom:var(--space-md);">Also wenn du mal jemand zum Reden brauchst... Ich bin da ;)</p>
+        <button class="btn btn-primary btn-lg" onclick="showTicTacToe()">Weiter zur Demo spielen →</button>
+      </div>
+    </div>
+    <div id="demo-step-3" style="display:none; padding: var(--space-3xl); text-align:center;">
+      <h2 style="font-size:1.5rem; font-weight:700; margin-bottom:var(--space-xl);">Tic Tac Toe · Du vs. Nova</h2>
+      <div id="ttt-board" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; max-width:300px; margin:0 auto var(--space-xl); aspect-ratio:1;">
+        <!-- 9 cells injected by JS -->
+      </div>
+      <div id="ttt-status" style="font-size:1.125rem; font-weight:600; margin-bottom:var(--space-md); color:var(--color-text-muted);">Dein Zug — klick ein Feld.</div>
+      <button class="btn btn-secondary" onclick="resetTicTacToe()" style="margin:0 auto;">Neu starten</button>
+    </div>
+  </div>
+</div>
 
 <!-- Gäste-Willkommen: Demo-Banner (von Hermes Agent automatisch eingefügt) -->
 <style>

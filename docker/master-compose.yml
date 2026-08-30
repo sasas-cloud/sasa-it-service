@@ -1,0 +1,421 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# SASA-IT Platform — Master Docker Compose
+# Caddy läuft als systemd-Dienst (kein Docker-Container).
+# Wazuh läuft auf externem Tailscale-Host (100.125.176.124) — nur SSL-Proxy.
+# ═══════════════════════════════════════════════════════════════════════════════
+
+networks:
+  sasa-it-net:
+    driver: bridge
+
+volumes:
+  nextcloud_data:
+    driver: local
+  nextcloud_db:
+    driver: local
+  nextcloud_aio_mastercontainer:
+    driver: local
+  authentik_media:
+    driver: local
+  authentik_certs:
+    driver: local
+  authentik_templates:
+    driver: local
+  authentik_postgres:
+    driver: local
+  authentik_redis:
+    driver: local
+  wikijs_data:
+    driver: local
+  wikijs_db:
+    driver: local
+  beszel_data:
+    driver: local
+  beszel_socket:
+    driver: local
+  netbird_data:
+    driver: local
+  passbolt_data:
+    driver: local
+  passbolt_db:
+    driver: local
+
+services:
+
+  # ── Nextcloud AIO ──
+  nextcloud-aio:
+    image: nextcloud/all-in-one:latest
+    container_name: nextcloud-aio-mastercontainer
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8080:80"
+    volumes:
+      - nextcloud_data:/var/www/html
+      - nextcloud_db:/var/lib/mysql
+      - nextcloud_aio_mastercontainer:/mnt/docker-aio-config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    environment:
+      - NEXTCLOUD_ADMIN_USER=${NC_ADMIN_USER:-admin}
+      - NEXTCLOUD_ADMIN_PASSWORD=${NC_ADMIN_PASSWORD:?Nextcloud Admin Password required}
+      - NEXTCLOUD_TRUSTED_DOMAINS=${NEXTCLOUD_TRUSTED_DOMAINS:-office.sasa-it.de}
+      - NEXTCLOUD_DB_TYPE=mysql
+      - NEXTCLOUD_DB_HOST=nextcloud-db
+      - NEXTCLOUD_DB_NAME=nextcloud
+      - NEXTCLOUD_DB_USER=nextcloud
+      - NEXTCLOUD_DB_PASSWORD=${NC_DB_PASSWORD:?Nextcloud DB Password required}
+      - NEXTCLOUD_REDIS_HOST=redis-nextcloud
+      - NEXTCLOUD_REDIS_HOST_PORT=6379
+      - NEXTCLOUD_MASTERCONTAINER_SECRET=${NEXTCLOUD_MASTERCONTAINER_SECRET:?AIO mastercontainer secret required}
+    networks:
+      - sasa-it-net
+    depends_on:
+      nextcloud-db:
+        condition: service_healthy
+      redis-nextcloud:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/status.php"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 300s
+
+  nextcloud-db:
+    image: mariadb:10.6
+    container_name: nextcloud-db
+    restart: unless-stopped
+    volumes:
+      - nextcloud_db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${NC_ROOT_PASSWORD:?MySQL Root Password required}
+      - MYSQL_PASSWORD=${NC_DB_PASSWORD:?Nextcloud DB Password required}
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+    networks:
+      - sasa-it-net
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  redis-nextcloud:
+    image: redis:7-alpine
+    container_name: redis-nextcloud
+    restart: unless-stopped
+    networks:
+      - sasa-it-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
+
+  # ── Authentik SSO ──
+  authentik-postgres:
+    image: postgres:16-alpine
+    container_name: authentik-postgres
+    restart: unless-stopped
+    volumes:
+      - authentik_postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${PG_PASS:?Authentik DB password required}
+      - POSTGRES_USER=${PG_USER:-authentik}
+      - POSTGRES_DB=${PG_DB:-authentik}
+    networks:
+      - sasa-it-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d authentik -U authentik"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 5s
+
+  authentik-redis:
+    image: redis:7-alpine
+    container_name: authentik-redis
+    restart: unless-stopped
+    command: --save 60 1 --loglevel warning
+    volumes:
+      - authentik_redis:/data
+    networks:
+      - sasa-it-net
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      start_period: 20s
+      interval: 30s
+      retries: 5
+      timeout: 3s
+
+  authentik-server:
+    image: ghcr.io/goauthentik/server:${AUTHENTIK_TAG:-2025.8.1}
+    container_name: authentik-server
+    restart: unless-stopped
+    command: server
+    ports:
+      - "127.0.0.1:9000:9000"
+    environment:
+      - AUTHENTIK_REDIS__HOST=authentik-redis
+      - AUTHENTIK_REDIS__PORT=6379
+      - AUTHENTIK_POSTGRESQL__HOST=authentik-postgres
+      - AUTHENTIK_POSTGRESQL__USER=${PG_USER:-authentik}
+      - AUTHENTIK_POSTGRESQL__NAME=${PG_DB:-authentik}
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${PG_PASS}
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY:?Secret key required}
+      - AUTHENTIK_ENCRYPTION_KEY=${AUTHENTIK_ENCRYPTION_KEY:?Encryption key required}
+      - AUTHENTIK_HTTP_PORT=9000
+      - AUTHENTIK_HTTPS_PORT=9443
+    volumes:
+      - authentik_media:/media
+      - authentik_certs:/certs
+      - authentik_templates:/templates
+    env_file:
+      - .env
+    networks:
+      - sasa-it-net
+    depends_on:
+      authentik-postgres:
+        condition: service_healthy
+      authentik-redis:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9000/health/ || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 90s
+
+  authentik-worker:
+    image: ghcr.io/goauthentik/server:${AUTHENTIK_TAG:-2025.8.1}
+    container_name: authentik-worker
+    restart: unless-stopped
+    command: worker
+    environment:
+      - AUTHENTIK_REDIS__HOST=authentik-redis
+      - AUTHENTIK_REDIS__PORT=6379
+      - AUTHENTIK_POSTGRESQL__HOST=authentik-postgres
+      - AUTHENTIK_POSTGRESQL__USER=${PG_USER:-authentik}
+      - AUTHENTIK_POSTGRESQL__NAME=${PG_DB:-authentik}
+      - AUTHENTIK_POSTGRESQL__PASSWORD=${PG_PASS}
+      - AUTHENTIK_SECRET_KEY=${AUTHENTIK_SECRET_KEY:?Secret key required}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - authentik_media:/media
+      - authentik_certs:/certs
+      - authentik_templates:/templates
+    env_file:
+      - .env
+    networks:
+      - sasa-it-net
+    depends_on:
+      authentik-postgres:
+        condition: service_healthy
+      authentik-redis:
+        condition: service_healthy
+
+  # ── Wiki.js ──
+  wikijs-db:
+    image: postgres:15-alpine
+    container_name: wikijs-db
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=wikijs
+      - POSTGRES_USER=wikijs
+      - POSTGRES_PASSWORD=${WIKIJS_DB_PASS:?Wiki.js DB password required}
+    volumes:
+      - wikijs_db:/var/lib/postgresql/data
+    networks:
+      - sasa-it-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U wikijs -d wikijs"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+
+  wikijs:
+    image: linuxserver/wikijs:latest
+    container_name: wikijs
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3001:3000"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Berlin
+      - DB_TYPE=postgres
+      - DB_HOST=wikijs-db
+      - DB_PORT=5432
+      - DB_USER=wikijs
+      - DB_PASS=${WIKIJS_DB_PASS}
+      - DB_NAME=wikijs
+      - WIKI_ADMIN_EMAIL=${WIKI_ADMIN_EMAIL:-admin@sasa-it.de}
+      - WIKI_ADMIN_PASSWORD=${WIKIJS_ADMIN_PASS:?Wiki.js admin password required}
+      - WIKI_ADMIN_NAME=${WIKI_ADMIN_NAME:-SASA-IT Admin}
+      - WIKI_PORT=3000
+    volumes:
+      - wikijs_data:/config
+    networks:
+      - sasa-it-net
+    depends_on:
+      wikijs-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # ── Beszel Monitoring ──
+  beszel:
+    image: henrygd/beszel:latest
+    container_name: beszel
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:18090:8090"
+    volumes:
+      - beszel_data:/app/data
+      - beszel_socket:/beszel_socket
+    environment:
+      - APP_URL=http://localhost:8090
+    networks:
+      - sasa-it-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8090/_/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  beszel-agent:
+    image: henrygd/beszel-agent:latest
+    container_name: beszel-agent
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - ./monitoring/beszel_agent_data:/var/lib/beszel-agent
+      - beszel_socket:/beszel_socket
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/sys:ro
+      - /proc:/proc:ro
+    environment:
+      - LISTEN=/beszel_socket/beszel.sock
+      - HUB_URL=http://localhost:8090
+      - KEY=${BEZEL_AGENT_KEY:?Beszel agent key required}
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - seccomp:unconfined
+    healthcheck:
+      test: ["CMD", "/agent", "health"]
+      interval: 120s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # ── Grafana ──
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - beszel_data:/beszel_data
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD:?Grafana admin password required}
+    networks:
+      - sasa-it-net
+
+  # ── NetBird Management ──
+  netbird-management:
+    image: netbirdio/netbird:latest
+    container_name: netbird-management
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:3002:3000"
+    environment:
+      - NB_DOMAIN=sso.sasa-it.de
+      - NB_MGT_SECRET=${NB_MGT_SECRET:?NetBird management secret required}
+      - NB_MGT_PORT=3000
+      - NB_DATA_DIR=/var/lib/netbird
+      - NB_LOG_LEVEL=info
+      - NB_SIGNALLING_SERVER=sso.sasa-it.de
+      - NB_SETUP_KEY=${NB_SETUP_KEY:?NetBird setup key required}
+    volumes:
+      - netbird_data:/var/lib/netbird
+    networks:
+      - sasa-it-net
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    security_opt:
+      - seccomp:unconfined
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # ── Passbolt ──
+  passbolt-db:
+    image: mariadb:10.6
+    container_name: passbolt-db
+    restart: unless-stopped
+    volumes:
+      - passbolt_db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${PASSPBOT_ROOT_PASSWORD:?Passbolt DB root password required}
+      - MYSQL_DATABASE=passbolt
+      - MYSQL_USER=passbolt
+      - MYSQL_PASSWORD=${PASSPBOT_DB_PASSWORD:?Passbolt DB password required}
+    networks:
+      - sasa-it-net
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+
+  passbolt:
+    image: passbolt/passbolt:latest
+    container_name: passbolt
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:9001:80"
+    volumes:
+      - passbolt_data:/var/www/passbolt
+    environment:
+      - APP_FULL_BASE_URL=https://passbolt.sasa-it.de
+      - DB_HOST=passbolt-db
+      - DB_PORT=3306
+      - DB_NAME=passbolt
+      - DB_USER=passbolt
+      - DB_PASSWORD=${PASSPBOT_DB_PASSWORD}
+      - EMAIL_DEFAULT_FROM_NAME=Passbolt
+      - EMAIL_TRANSPORT_DEFAULT_HOST=smtp.gmail.com
+      - EMAIL_TRANSPORT_DEFAULT_PORT=587
+      - EMAIL_TRANSPORT_DEFAULT_USERNAME=admin@sasa-it.de
+      - EMAIL_TRANSPORT_DEFAULT_PASSWORD=${EMAIL_PASSWORD:?Email password required}
+      - EMAIL_TRANSPORT_DEFAULT_TLS=true
+      - PASSBOLT_LOG_LEVEL=info
+      - SERVER_APP_BASE=/var/www/passbolt
+      - PLUGIN_PASSPBOT_FORGOT_PASSWORD_ENABLED=false
+    env_file:
+      - .env
+    depends_on:
+      passbolt-db:
+        condition: service_healthy
+    networks:
+      - sasa-it-net
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/healthcheck"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s

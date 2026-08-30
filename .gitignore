@@ -1,60 +1,56 @@
-# Environment files — NEVER commit
+# SASA-IT Service Plattform — .gitignore
+
+# Environment and secrets
 .env
 .env.local
 .env.production
-
-# Jupyter
-.ipynb_checkpoints/
-*.ipynb_checkpoints
+.venv/
+venv/
+*.env
 
 # Python
 __pycache__/
 *.pyc
 *.pyo
+.pytest_cache/
+.mypy_cache/
 *.egg-info/
+
+# Node / JavaScript (falls verwendet)
+node_modules/
 dist/
 build/
-.eggs/
 
-# Virtual environments
-venv/
-.venv/
-env/
-.env/
-
-# IDE
+# IDE / Editor
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
-
-# OS
 .DS_Store
 Thumbs.db
 
 # Logs
 *.log
 logs/
+var/log/
 
-# Temp
+# Temporary files
 tmp/
 temp/
 .cache/
 *.tmp
 
-# Secrets (additional)
-*.key
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets
 *.pem
-*.secret
+*.key
+*.crt
 secrets/
-credentials/
 
-# Local config
-config.local.*
-local-config.*
-
-# Test / Dev
-test/
-tests/
-spec/
+# Docker (optional: build artifacts)
+docker/*.tar
+docker/*.tar.gz
