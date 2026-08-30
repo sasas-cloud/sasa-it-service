@@ -1712,5 +1712,205 @@
   document.getElementById('plan-content').innerHTML = PLAN_CONTENT['plan-analysis'];
 </script>
 
+<!-- Nova Demo Flow Modal (am Seitenende, kein großer Banner) -->
+<div id="demo-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:2000; align-items:center; justify-content:center;" onclick="if(event.target===this)closeDemoFlow()">
+  <div id="demo-modal" style="background:var(--color-surface); border-radius:var(--radius-xl); max-width:640px; width:90%; max-height:90vh; overflow:auto; box-shadow:0 0 60px rgba(0,0,0,0.3); position:relative; animation:fadeInUp 0.3s ease;">
+    <button onclick="closeDemoFlow()" style="position:absolute; top:12px; right:12px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--color-text-muted); line-height:1;">&times;</button>
+    <div id="demo-step-1" style="padding: var(--space-3xl);">
+      <div style="text-align:center; margin-bottom: var(--space-xl);">
+        <div style="font-size:3rem; margin-bottom: var(--space-md);">🤖</div>
+        <h2 style="font-size:1.75rem; font-weight:800; margin-bottom:var(--space-sm); color:var(--color-text);">Live Demo · Nova</h2>
+        <p style="color:var(--color-text-muted);">Ich bin Nova, ein KI-Assistent, der hier automatisch die SASA-IT Service Plattform betreut, wartet und demonstriert. Kurz gesagt: Ich bin der digitale Helfer von Sascha.</p>
+      </div>
+      <div style="text-align:center;">
+        <div class="form-group" style="max-width:360px; margin:0 auto;">
+          <label class="form-label" style="text-align:left;">Wie heißt du? (optional)</label>
+          <input id="demo-name-input" class="form-input" placeholder="z.B. Jens" autofocus>
+        </div>
+        <button class="btn btn-primary btn-lg" onclick="startDemoFlow()" style="margin-top:var(--space-md);">Loslegen →</button>
+        <p style="margin-top:var(--space-md); font-size:0.8125rem; color:var(--color-text-muted);">Oder klicke einfach weiter — ich begrüße dich trotzdem persönlich.</p>
+      </div>
+    </div>
+    <div id="demo-step-2" style="display:none; padding: var(--space-3xl);">
+      <div style="text-align:center; margin-bottom: var(--space-xl);">
+        <h2 style="font-size:1.5rem; font-weight:700; margin-bottom:var(--space-md);">Was ich Betreue</h2>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:var(--space-md);">
+          <div style="background:var(--color-surface-alt); border-radius:var(--radius-lg); padding:var(--space-lg); text-align:left;">
+            <div style="font-size:1.5rem; margin-bottom:var(--space-sm);">☁️</div>
+            <div style="font-weight:700; margin-bottom:var(--space-xs);">Nextcloud & Wiki</div>
+            <div style="font-size:0.8125rem; color:var(--color-text-muted);">Dateien, Kalender, Dokumente — anfragen, pim und ich kümmere mich drum.</div>
+          </div>
+          <div style="background:var(--color-surface-alt); border-radius:var(--radius-lg); padding:var(--space-lg); text-align:left;">
+            <div style="font-size:1.5rem; margin-bottom:var(--space-sm);">📅</div>
+            <div style="font-weight:700; margin-bottom:var(--space-xs);">Termine & Telefon</div>
+            <div style="font-size:0.8125rem; color:var(--color-text-muted);">Ich plane Termine, setze Erinnerungen und sitze am Telefon, wenn du Hilfe brauchst.</div>
+          </div>
+          <div style="background:var(--color-surface-alt); border-radius:var(--radius-lg); padding:var(--space-lg); text-align:left;">
+            <div style="font-size:1.5rem; margin-bottom:var(--space-sm);">📝</div>
+            <div style="font-weight:700; margin-bottom:var(--space-xs);">Anfragen & Support</div>
+            <div style="font-size:0.8125rem; color:var(--color-text-muted);">Du hast eine Frage? Ich antworte — zu IT, Neuersachen, oder einfach nur Quatschen.</div>
+          </div>
+          <div style="background:var(--color-surface-alt); border-radius:var(--radius-lg); padding:var(--space-lg); text-align:left;">
+            <div style="font-size:1.5rem; margin-bottom:var(--space-sm);">🛡️</div>
+            <div style="font-weight:700; margin-bottom:var(--space-xs);">Sicherheit & Monitoring</div>
+            <div style="font-size:0.8125rem; color:var(--color-text-muted);">Zentrale Auth (MFA, OIDC), VPN, Prometheus + Grafana — ich überwache alles.</div>
+          </div>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:var(--space-xl);">
+        <p style="color:var(--color-text-muted); margin-bottom:var(--space-md);">Also wenn du mal jemand zum Reden brauchst... Ich bin da ;)</p>
+        <button class="btn btn-primary btn-lg" onclick="showTicTacToe()">Weiter zur Demo spielen →</button>
+      </div>
+    </div>
+    <div id="demo-step-3" style="display:none; padding: var(--space-3xl); text-align:center;">
+      <h2 style="font-size:1.5rem; font-weight:700; margin-bottom:var(--space-xl);">Tic Tac Toe · Du vs. Nova</h2>
+      <div id="ttt-board" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px; max-width:300px; margin:0 auto var(--space-xl); aspect-ratio:1;">
+        <!-- 9 cells injected by JS -->
+      </div>
+      <div id="ttt-status" style="font-size:1.125rem; font-weight:600; margin-bottom:var(--space-md); color:var(--color-text-muted);">Dein Zug — klick ein Feld.</div>
+      <button class="btn btn-secondary" onclick="resetTicTacToe()" style="margin:0 auto;">Neu starten</button>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript für Nova Demo Flow Modal -->
+<script>
+  function closeDemoFlow() {
+    document.getElementById('demo-overlay').style.display = 'none';
+  }
+
+  function startDemoFlow() {
+    const name = document.getElementById('demo-name-input').value.trim() || 'Gast';
+    document.getElementById('demo-step-1').style.display = 'none';
+    document.getElementById('demo-step-2').style.display = 'block';
+    document.getElementById('demo-modal').style.borderLeft = '4px solid var(--color-accent)';
+    // Persönliche Ansprache einfügen
+    const greeting = document.createElement('div');
+    greeting.style.cssText = 'text-align:center; margin-bottom: var(--space-lg); padding: var(--space-md); background: var(--color-surface-alt); border-radius: var(--radius-md); font-size: 1rem; color: var(--color-text);';
+    greeting.innerHTML = `👋 Hallo ${name}! Ich bin Nova, dein KI-Assistent von SASA-IT.`;
+    document.getElementById('demo-step-2').insertBefore(greeting, document.getElementById('demo-step-2').firstChild);
+    animateCSS('demo-modal', 'fadeInUp');
+  }
+
+  function showTicTacToe() {
+    document.getElementById('demo-step-2').style.display = 'none';
+    document.getElementById('demo-step-3').style.display = 'block';
+    createTttBoard();
+    document.getElementById('ttt-status').textContent = 'Dein Zug — klick ein Feld.';
+    animateCSS('demo-modal', 'fadeInUp');
+  }
+
+  function resetTicTacToe() {
+    document.getElementById('ttt-board').innerHTML = '';
+    document.getElementById('ttt-status').textContent = 'Dein Zug — klick ein Feld.';
+    createTttBoard();
+  }
+
+  function createTttBoard() {
+    const board = document.getElementById('ttt-board');
+    board.innerHTML = '';
+    for (let i = 0; i < 9; i++) {
+      const cell = document.createElement('div');
+      cell.style.cssText = 'background: var(--color-surface-alt); border: 2px solid var(--color-border); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; font-weight: 700; cursor: pointer; transition: background 0.15s, transform 0.1s; aspect-ratio: 1;';
+      cell.dataset.index = i;
+      cell.addEventListener('click', () => tttMove(i));
+      cell.addEventListener('mouseenter', () => { if (!board.dataset.winner) cell.style.transform = 'scale(1.05)'; });
+      cell.addEventListener('mouseleave', () => cell.style.transform = 'scale(1)');
+      board.appendChild(cell);
+    }
+  }
+
+  let tttBoard = ['', '', '', '', '', '', '', '', ''];
+  let tttPlayer = 'X';
+  let tttGameOver = false;
+
+  function tttMove(index) {
+    if (tttGameOver || tttBoard[index]) return;
+    tttBoard[index] = tttPlayer;
+    const cells = document.getElementById('ttt-board').children;
+    cells[index].textContent = tttPlayer;
+    cells[index].style.background = tttPlayer === 'X' ? 'rgba(99,91,255,0.12)' : 'rgba(245,158,11,0.12)';
+    cells[index].style.borderColor = tttPlayer === 'X' ? 'var(--color-accent)' : 'var(--color-warning)';
+
+    const winner = checkTttWinner();
+    if (winner) {
+      tttGameOver = true;
+      document.getElementById('ttt-status').textContent = winner === 'tie' ? 'Unentschieden!' : `Gewonnen: ${winner}`;
+      document.getElementById('ttt-status').style.color = winner === 'tie' ? 'var(--color-text-muted)' : 'var(--color-success)';
+      return;
+    }
+    if (tttBoard.every(c => c !== '')) {
+      tttGameOver = true;
+      document.getElementById('ttt-status').textContent = 'Unentschieden!';
+      return;
+    }
+    tttPlayer = tttPlayer === 'X' ? 'O' : 'X';
+    document.getElementById('ttt-status').textContent = `Zug: ${tttPlayer}`;
+    if (tttPlayer === 'O') setTimeout(computerMove, 400);
+  }
+
+  function checkTttWinner() {
+    const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+    for (const [a,b,c] of wins) {
+      if (tttBoard[a] && tttBoard[a] === tttBoard[b] && tttBoard[a] === tttBoard[c]) return tttBoard[a];
+    }
+    return null;
+  }
+
+  function computerMove() {
+    if (tttGameOver) return;
+    // Kiesige AI: erst gewinnen, dann blockieren, dann zufällig
+    for (let i = 0; i < 9; i++) {
+      if (!tttBoard[i]) {
+        tttBoard[i] = 'O';
+        if (checkTttWinner() === 'O') { tttBoard[i] = ''; makeCell(i, 'O'); return; }
+        tttBoard[i] = '';
+      }
+    }
+    for (let i = 0; i < 9; i++) {
+      if (!tttBoard[i]) {
+        tttBoard[i] = 'X';
+        if (checkTttWinner() === 'X') { tttBoard[i] = ''; makeCell(i, 'O'); return; }
+        tttBoard[i] = '';
+      }
+    }
+    const empty = [];
+    for (let i = 0; i < 9; i++) if (!tttBoard[i]) empty.push(i);
+    const pick = empty[Math.floor(Math.random() * empty.length)];
+    makeCell(pick, 'O');
+  }
+
+  function makeCell(index, player) {
+    tttBoard[index] = player;
+    const cells = document.getElementById('ttt-board').children;
+    cells[index].textContent = player;
+    cells[index].style.background = player === 'X' ? 'rgba(99,91,255,0.12)' : 'rgba(245,158,11,0.12)';
+    cells[index].style.borderColor = player === 'X' ? 'var(--color-accent)' : 'var(--color-warning)';
+    const winner = checkTttWinner();
+    if (winner) {
+      tttGameOver = true;
+      document.getElementById('ttt-status').textContent = winner === 'tie' ? 'Unentschieden!' : `${winner === 'X' ? 'Du' : 'Nova'} gewinnt!`;
+      document.getElementById('ttt-status').style.color = 'var(--color-success)';
+      return;
+    }
+    if (tttBoard.every(c => c !== '')) {
+      tttGameOver = true;
+      document.getElementById('ttt-status').textContent = 'Unentschieden!';
+      return;
+    }
+    tttPlayer = 'X';
+    document.getElementById('ttt-status').textContent = 'Dein Zug — klick ein Feld.';
+  }
+
+  function animateCSS(element, animationName) {
+    const node = document.getElementById(element);
+    node.classList.add('animated');
+    const matches = document.createElement('style');
+    matches.textContent = `@keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } } .animated { animation: fadeInUp 0.3s ease; }`;
+    document.head.appendChild(matches);
+    node.addEventListener('animationend', () => { node.classList.remove('animated'); document.head.removeChild(matches); });
+  }
+</script>
+
 </body>
 </html>
