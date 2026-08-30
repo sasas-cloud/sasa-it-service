@@ -14,7 +14,7 @@ volumes:
   nextcloud_db:
     driver: local
   nextcloud_aio_mastercontainer:
-    driver: local
+    external: true
   authentik_media:
     driver: local
   authentik_certs:

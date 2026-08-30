@@ -1,0 +1,156 @@
+# ═══════════════════════════════════════════════════════════════════════════════
+# SASA-IT Caddy — SSL-Terminal + Reverse-Proxy
+# ═══════════════════════════════════════════════════════════════════════════════
+# office.sasa-it.de → Nextcloud AIO (Apache 11000 via Docker net)
+# auth.sasa-it.de   → Authentik SSO
+# sso.sasa-it.de    → NetBird Dashboard
+# wiki.sasa-it.de   → Wiki.js
+# grafana.sasa-it.de → Grafana
+# monitor.sasa-it.de → Beszel Monitoring (Port 18090, hinzugefügt 2026-08-30)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+{
+    email admin@sasa-it.de
+}
+
+# ── Landing Page ──
+sasa-it.de, www.sasa-it.de {
+    root * /var/www/landing-page
+    file_server
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        +X-Content-Type-Options "nosniff"
+        +X-Frame-Options "DENY"
+        +Referrer-Policy "strict-origin-when-cross-origin"
+    }
+    log {
+        output file /var/log/caddy/sasa-it-access.log
+        format console
+    }
+}
+
+# ── Authentik SSO ──
+auth.sasa-it.de {
+    reverse_proxy 127.0.0.1:9000
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        +X-Content-Type-Options "nosniff"
+        +X-Frame-Options "DENY"
+    }
+    @websocket path /api/v3/ *ws*
+    reverse_proxy @websocket 127.0.0.1:9000
+    log {
+        output file /var/log/caddy/auth-access.log
+    }
+}
+
+# ── Nextcloud AIO ──
+office.sasa-it.de {
+    reverse_proxy 127.0.0.1:8080 {
+        header_up X-Real-IP {remote}
+        header_up X-Forwarded-For {remote}
+        header_up X-Forwarded-Proto {scheme}
+    }
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        +X-Content-Type-Options "nosniff"
+        +X-Frame-Options "SAMEORIGIN"
+        +Content-Security-Policy "frame-ancestors 'self'"
+    }
+    @websocket path /ocs/v2/applications/* /websocket/*
+    reverse_proxy @websocket 127.0.0.1:8080
+    @static_assets path *.css *.js *.png *.jpg *.jpeg *.gif *.svg *.ico *.woff *.woff2 *.avif
+    header @static_assets {
+        +Cache-Control "public, max-age=86400, immutable"
+    }
+    @html path *.html
+    header @html {
+        +Cache-Control "public, max-age=300"
+    }
+    log {
+        output file /var/log/caddy/office-access.log
+    }
+}
+
+# ── NetBird Dashboard ──
+sso.sasa-it.de {
+    reverse_proxy 127.0.0.1:3002 {
+        header_up Host {upstream_hostport}
+    }
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        +X-Content-Type-Options "nosniff"
+    }
+    log {
+        output file /var/log/caddy/sso-access.log
+    }
+}
+
+# ── Wiki.js ──
+wiki.sasa-it.de {
+    reverse_proxy 127.0.0.1:3001
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        +X-Content-Type-Options "nosniff"
+        +X-Frame-Options "SAMEORIGIN"
+    }
+    @static_assets path *.css *.js *.png *.jpg *.jpeg *.gif *.svg *.ico *.woff *.woff2
+    header @static_assets {
+        +Cache-Control "public, max-age=86400, immutable"
+    }
+    log {
+        output file /var/log/caddy/wiki-access.log
+    }
+}
+
+# ── Grafana ──
+grafana.sasa-it.de {
+    reverse_proxy 127.0.0.1:3000
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        +X-Content-Type-Options "nosniff"
+    }
+    @static_assets path *.css *.js *.png *.jpg *.jpeg *.gif *.svg *.ico *.woff *.woff2
+    header @static_assets {
+        +Cache-Control "public, max-age=86400, immutable"
+    }
+    log {
+        output file /var/log/caddy/grafana-access.log
+    }
+}
+
+# ── Passbolt — Passwort-Manager (Tailscale: 100.104.100.4) ──
+passbolt.sasa-it.de {
+    tls {
+        protocols tls1.2 tls1.3
+    }
+    reverse_proxy 100.104.100.4:443
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        +X-Frame-Options "SAMEORIGIN"
+    }
+}
+
+# ── Wazuh — Security Monitoring (Tailscale: 100.125.176.124) ──
+security.sasa-it.de {
+    tls {
+        protocols tls1.2 tls1.3
+    }
+    reverse_proxy 100.125.176.124:443
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        +X-Frame-Options "SAMEORIGIN"
+    }
+}
+
+# ── Beszel Monitoring ──
+monitor.sasa-it.de {
+    reverse_proxy 127.0.0.1:18090
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        +X-Frame-Options "DENY"
+    }
+    log {
+        output file /var/log/caddy/monitor-access.log
+    }
+}
