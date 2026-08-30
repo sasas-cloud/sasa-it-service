@@ -56,3 +56,15 @@ security.sasa-it.de {
         +X-Frame-Options "SAMEORIGIN"
     }
 }
+
+# ── Beszel Monitoring ── (interne Port: 18090)
+monitor.sasa-it.de {
+    reverse_proxy 127.0.0.1:18090
+    header {
+        +Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        +X-Frame-Options "DENY"
+    }
+    log {
+        output file /var/log/caddy/monitor-access.log
+    }
+}
